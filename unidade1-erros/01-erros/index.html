@@ -1138,6 +1138,8 @@
       
         
       
+        
+      
     
     
     
@@ -1198,6 +1200,34 @@
     
   
     Formulário
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/numpy-matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    numpy e matplotlib do curso
   
 
     
@@ -1515,6 +1545,23 @@ computador guarda os primeiros 53 algarismos binários (o padrão IEEE 754, em
 precisão dupla, que é o <code>float</code> do Python) e <strong>descarta o resto</strong>. O <span class="arithmatex">\(0{,}1\)</span>
 guardado é <span class="arithmatex">\(0{,}1000000000000000055\ldots\)</span>: errado na 18.ª casa.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">🧰 Comando novo: <code>np.float32</code>, a precisão simples</p>
+<p>O <code>float</code> do Python tem cerca de 16 algarismos (precisão <strong>dupla</strong>, 64 bits).
+Muitos microcontroladores, placas de vídeo e sensores usam a precisão
+<strong>simples</strong>, com 32 bits e cerca de 7 algarismos. <code>np.float32(x)</code> guarda <code>x</code>
+desse jeito, para ver o que esses aparelhos veem:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"0.1 em precisao dupla:   </span><span class="si">{</span><span class="mf">0.1</span><span class="si">:</span><span class="s2">.20f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"0.1 em precisao simples: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="si">:</span><span class="s2">.20f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>0.1 em precisao dupla:   0.10000000000000000555
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>0.1 em precisao simples: 0.10000000149011611938
+</code></pre></div>
+<p>Em precisão simples, o 0,1 já erra na <strong>nona</strong> casa. Conta feita com
+<code>np.float32</code> continua em <code>float32</code>.</p>
+</div>
 <p>A consequência prática é uma regra que vale para o curso inteiro: <strong>nunca compare
 floats com <code>==</code></strong>. Compare com uma tolerância: <code>abs(a - b) &lt; tol</code>. É assim que os
 testes das listas funcionam.</p>
@@ -1525,28 +1572,26 @@ testes das listas funcionam.</p>
 \qquad
 \varepsilon_t = \frac{\lvert \text{aproximado} - \text{exato} \rvert}{\lvert\text{exato}\rvert} \times 100\%
 \]</div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Dois erros de 1 cm: um e desprezivel, o outro e grave.</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># O que diferencia os dois e o erro RELATIVO.</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">erros</span><span class="p">(</span><span class="n">medido</span><span class="p">,</span> <span class="n">exato</span><span class="p">):</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">absoluto</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">medido</span> <span class="o">-</span> <span class="n">exato</span><span class="p">)</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">relativo</span> <span class="o">=</span> <span class="n">absoluto</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">exato</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="k">return</span> <span class="n">absoluto</span><span class="p">,</span> <span class="n">relativo</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">casos</span> <span class="o">=</span> <span class="p">[</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="p">(</span><span class="s2">"vao de uma ponte (cm)"</span><span class="p">,</span> <span class="mi">9999</span><span class="p">,</span> <span class="mi">10000</span><span class="p">),</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="p">(</span><span class="s2">"rebite (cm)"</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="p">(</span><span class="s2">"dose de remedio (mg)"</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">]</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="k">for</span> <span class="n">nome</span><span class="p">,</span> <span class="n">medido</span><span class="p">,</span> <span class="n">exato</span> <span class="ow">in</span> <span class="n">casos</span><span class="p">:</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">absoluto</span><span class="p">,</span> <span class="n">relativo</span> <span class="o">=</span> <span class="n">erros</span><span class="p">(</span><span class="n">medido</span><span class="p">,</span> <span class="n">exato</span><span class="p">)</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nome</span><span class="si">:</span><span class="s2">&lt;24</span><span class="si">}</span><span class="s2"> erro absoluto = </span><span class="si">{</span><span class="n">absoluto</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">   erro relativo = </span><span class="si">{</span><span class="n">relativo</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Dois erros de 1 cm: um e desprezivel, o outro e grave.</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># O que diferencia os dois e o erro RELATIVO.</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">erros</span><span class="p">(</span><span class="n">medido</span><span class="p">,</span> <span class="n">exato</span><span class="p">):</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">absoluto</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">medido</span> <span class="o">-</span> <span class="n">exato</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">relativo</span> <span class="o">=</span> <span class="n">absoluto</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">exato</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="k">return</span> <span class="n">absoluto</span><span class="p">,</span> <span class="n">relativo</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">absoluto</span><span class="p">,</span> <span class="n">relativo</span> <span class="o">=</span> <span class="n">erros</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"vao de uma ponte (cm):  erro absoluto = </span><span class="si">{</span><span class="n">absoluto</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">   erro relativo = </span><span class="si">{</span><span class="n">relativo</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">absoluto</span><span class="p">,</span> <span class="n">relativo</span> <span class="o">=</span> <span class="n">erros</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"rebite (cm):            erro absoluto = </span><span class="si">{</span><span class="n">absoluto</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">   erro relativo = </span><span class="si">{</span><span class="n">relativo</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">absoluto</span><span class="p">,</span> <span class="n">relativo</span> <span class="o">=</span> <span class="n">erros</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"dose de remedio (mg):   erro absoluto = </span><span class="si">{</span><span class="n">absoluto</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">   erro relativo = </span><span class="si">{</span><span class="n">relativo</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>vao de uma ponte (cm)    erro absoluto =   1.00   erro relativo =   0.01 %
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>rebite (cm)              erro absoluto =   1.00   erro relativo =  10.00 %
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>dose de remedio (mg)     erro absoluto =   0.10   erro relativo =  25.00 %
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>vao de uma ponte (cm):  erro absoluto =   1.00   erro relativo =   0.01 %
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>rebite (cm):            erro absoluto =   1.00   erro relativo =  10.00 %
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>dose de remedio (mg):   erro absoluto =   0.10   erro relativo =  25.00 %
 </code></pre></div>
 <p>O mesmo centímetro de erro é desprezível no vão de uma ponte (0,01 %) e
 inaceitável num rebite (10 %). Uma dose de remédio 0,1 mg acima parece pouco em
@@ -1587,41 +1632,41 @@ Scarborough:</p>
 \]</div>
 <p>Para 3 algarismos, <span class="arithmatex">\(\varepsilon_s = 0{,}05\,\%\)</span>.</p>
 </div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># e^0.5 pela serie de Taylor, 1 + x + x²/2! + x³/3! + ...</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Paramos quando o erro APROXIMADO (que da para calcular sem saber a</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># resposta) fica abaixo da tolerancia para 3 algarismos significativos.</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">x</span> <span class="o">=</span> <span class="mf">0.5</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">exato</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                 <span class="c1"># so para comparar</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">n_alg</span> <span class="o">=</span> <span class="mi">3</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">eps_s</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">n_alg</span><span class="p">)</span>     <span class="c1"># tolerancia de Scarborough, em %</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">soma</span> <span class="o">=</span> <span class="mf">1.0</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="n">termo</span> <span class="o">=</span> <span class="mf">1.0</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"termos   soma          eps_t (%)    eps_a (%)"</span><span class="p">)</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">soma</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">exato</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">soma</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">exato</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">9.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>    <span class="n">termo</span> <span class="o">=</span> <span class="n">termo</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">n</span>           <span class="c1"># x^n/n! a partir do termo anterior</span>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="n">anterior</span> <span class="o">=</span> <span class="n">soma</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="n">soma</span> <span class="o">=</span> <span class="n">soma</span> <span class="o">+</span> <span class="n">termo</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="n">eps_t</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">exato</span> <span class="o">-</span> <span class="n">soma</span><span class="p">)</span> <span class="o">/</span> <span class="n">exato</span> <span class="o">*</span> <span class="mi">100</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="n">eps_a</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">soma</span> <span class="o">-</span> <span class="n">anterior</span><span class="p">)</span> <span class="o">/</span> <span class="n">soma</span> <span class="o">*</span> <span class="mi">100</span>
-<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">soma</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">eps_t</span><span class="si">:</span><span class="s2">9.6f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">eps_a</span><span class="si">:</span><span class="s2">9.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="k">if</span> <span class="n">eps_a</span> <span class="o">&lt;</span> <span class="n">eps_s</span><span class="p">:</span>
-<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>        <span class="k">break</span>
-<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"parou com </span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> termos: eps_a &lt; eps_s = </span><span class="si">{</span><span class="n">eps_s</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># e^0.5 pela serie de Taylor, 1 + x + x²/2! + x³/3! + ...</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># Paramos quando o erro APROXIMADO (que da para calcular sem saber a</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># resposta) fica abaixo da tolerancia para 3 algarismos significativos.</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">x</span> <span class="o">=</span> <span class="mf">0.5</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">exato</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                 <span class="c1"># so para comparar</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">n_alg</span> <span class="o">=</span> <span class="mi">3</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">eps_s</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="n">n_alg</span><span class="p">)</span>     <span class="c1"># tolerancia de Scarborough, em %</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">soma</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">termo</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"termos   soma          eps_t (%)    eps_a (%)"</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">soma</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">exato</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">soma</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">exato</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">9.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="n">termo</span> <span class="o">=</span> <span class="n">termo</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">n</span>           <span class="c1"># x^n/n! a partir do termo anterior</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="n">anterior</span> <span class="o">=</span> <span class="n">soma</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>    <span class="n">soma</span> <span class="o">=</span> <span class="n">soma</span> <span class="o">+</span> <span class="n">termo</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>    <span class="n">eps_t</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">exato</span> <span class="o">-</span> <span class="n">soma</span><span class="p">)</span> <span class="o">/</span> <span class="n">exato</span> <span class="o">*</span> <span class="mi">100</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="n">eps_a</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">soma</span> <span class="o">-</span> <span class="n">anterior</span><span class="p">)</span> <span class="o">/</span> <span class="n">soma</span> <span class="o">*</span> <span class="mi">100</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">soma</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">eps_t</span><span class="si">:</span><span class="s2">9.6f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">eps_a</span><span class="si">:</span><span class="s2">9.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>    <span class="k">if</span> <span class="n">eps_a</span> <span class="o">&lt;</span> <span class="n">eps_s</span><span class="p">:</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>        <span class="k">break</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"parou com </span><span class="si">{</span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> termos: eps_a &lt; eps_s = </span><span class="si">{</span><span class="n">eps_s</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>termos   soma          eps_t (%)    eps_a (%)
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    1   1.000000000   39.346934
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    2   1.500000000    9.020401   33.333333
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    3   1.625000000    1.438768    7.692308
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    4   1.645833333    0.175162    1.265823
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    5   1.648437500    0.017212    0.157978
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    6   1.648697917    0.001416    0.015795
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>parou com 6 termos: eps_a &lt; eps_s = 0.05 %
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>termos   soma          eps_t (%)    eps_a (%)
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    1   1.000000000   39.346934
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    2   1.500000000    9.020401   33.333333
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    3   1.625000000    1.438768    7.692308
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    4   1.645833333    0.175162    1.265823
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    5   1.648437500    0.017212    0.157978
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    6   1.648697917    0.001416    0.015795
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>parou com 6 termos: eps_a &lt; eps_s = 0.05 %
 </code></pre></div>
 <p>Repare nas duas colunas de erro. <span class="arithmatex">\(\varepsilon_a\)</span> (que o programa consegue calcular)
 é sempre <strong>maior</strong> que <span class="arithmatex">\(\varepsilon_t\)</span> (que só conhecemos porque <span class="arithmatex">\(e^{0{,}5}\)</span> tem
@@ -1640,28 +1685,50 @@ contava décimos de segundo e os convertia para segundos multiplicando por
 <span class="arithmatex">\(0{,}1\)</span>, guardado num registrador de 24 bits. A bateria estava ligada havia
 100 horas.</p>
 </div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Dhahran, 25/02/1991: uma bateria de misseis Patriot nao interceptou um</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># missil Scud. O relogio do sistema contava decimos de segundo e multiplicava</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># por 0.1, guardado num registrador de 24 bits (23 depois da virgula binaria).</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">decimo_guardado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">23</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="mi">23</span>     <span class="c1"># 0.1 cortado em 23 bits</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">erro_por_tique</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">-</span> <span class="n">decimo_guardado</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"0.1 guardado:      </span><span class="si">{</span><span class="n">decimo_guardado</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"erro por tique:    </span><span class="si">{</span><span class="n">erro_por_tique</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">horas_ligado</span> <span class="o">=</span> <span class="mi">100</span>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">tiques</span> <span class="o">=</span> <span class="n">horas_ligado</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">10</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">atraso</span> <span class="o">=</span> <span class="n">tiques</span> <span class="o">*</span> <span class="n">erro_por_tique</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"depois de </span><span class="si">{</span><span class="n">horas_ligado</span><span class="si">}</span><span class="s2"> h ligado: </span><span class="si">{</span><span class="n">tiques</span><span class="si">}</span><span class="s2"> tiques, relogio atrasado </span><span class="si">{</span><span class="n">atraso</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="n">velocidade_scud</span> <span class="o">=</span> <span class="mi">1676</span>        <span class="c1"># m/s</span>
-<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nesse tempo o Scud percorre </span><span class="si">{</span><span class="n">atraso</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">velocidade_scud</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m"</span><span class="p">)</span>
+<p>O programa abaixo refaz a conta do relógio. Para imitar o registrador de 23 bits,
+ele multiplica 0,1 por <span class="arithmatex">\(2^{23}\)</span>, <strong>corta</strong> a parte fracionária e divide de volta:
+o que sobrar de 0,1 é o que cabia no registrador.</p>
+<div class="admonition note">
+<p class="admonition-title">🧰 Comando novo: <code>np.floor</code></p>
+<p><code>np.floor(x)</code> arredonda <strong>para baixo</strong>: devolve o maior inteiro que não passa
+de <code>x</code>. É o "cortar as casas" de um registrador ou de um sistema que guarda
+centavos:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">2.9</span><span class="p">))</span>       <span class="c1"># arredonda para baixo</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="o">-</span><span class="mf">2.1</span><span class="p">))</span>      <span class="c1"># "para baixo" nos negativos e para longe do zero</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mf">2.5</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="mf">3.5</span><span class="p">))</span>   <span class="c1"># o round do Python arredonda o 5 para o PAR</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>0.1 guardado:      0.099999904633
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>erro por tique:    9.537e-08 s
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>depois de 100 h ligado: 3600000 tiques, relogio atrasado 0.3433 s
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>nesse tempo o Scud percorre 575 m
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>2.0
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>-3.0
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>2 4
+</code></pre></div>
+<p>Cuidado com os negativos: "para baixo" é na direção de <span class="arithmatex">\(-\infty\)</span>, então
+<span class="arithmatex">\(-2{,}1\)</span> vira <span class="arithmatex">\(-3\)</span>. E o <code>round</code> do Python arredonda o 5 para o número <strong>par</strong>
+(<span class="arithmatex">\(2{,}5 \to 2\)</span>), para os erros se compensarem numa soma longa.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Dhahran, 25/02/1991: uma bateria de misseis Patriot nao interceptou um</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># missil Scud. O relogio do sistema contava decimos de segundo e multiplicava</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># por 0.1, guardado num registrador de 24 bits (23 depois da virgula binaria).</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">decimo_guardado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">23</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="mi">23</span>     <span class="c1"># 0.1 cortado em 23 bits</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">erro_por_tique</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">-</span> <span class="n">decimo_guardado</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"0.1 guardado:      </span><span class="si">{</span><span class="n">decimo_guardado</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"erro por tique:    </span><span class="si">{</span><span class="n">erro_por_tique</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">horas_ligado</span> <span class="o">=</span> <span class="mi">100</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="n">tiques</span> <span class="o">=</span> <span class="n">horas_ligado</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">10</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="n">atraso</span> <span class="o">=</span> <span class="n">tiques</span> <span class="o">*</span> <span class="n">erro_por_tique</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"depois de </span><span class="si">{</span><span class="n">horas_ligado</span><span class="si">}</span><span class="s2"> h ligado: </span><span class="si">{</span><span class="n">tiques</span><span class="si">}</span><span class="s2"> tiques, relogio atrasado </span><span class="si">{</span><span class="n">atraso</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="n">velocidade_scud</span> <span class="o">=</span> <span class="mi">1676</span>        <span class="c1"># m/s</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"nesse tempo o Scud percorre </span><span class="si">{</span><span class="n">atraso</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">velocidade_scud</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> m"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>0.1 guardado:      0.099999904633
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>erro por tique:    9.537e-08 s
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>depois de 100 h ligado: 3600000 tiques, relogio atrasado 0.3433 s
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>nesse tempo o Scud percorre 575 m
 </code></pre></div>
 <p>Um erro de um décimo de milionésimo de segundo por tique virou um terço de
 segundo depois de 3,6 milhões de tiques. O radar procurou o Scud mais de meio
@@ -1673,29 +1740,29 @@ Os algarismos iguais se cancelam, e o que sobra são justamente as últimas casa
 que já estavam contaminadas. Você já viu isso acontecer: foi o
 <a href="../../unidade2-derivadas/02-diferencas-finitas/#quando-h-pequeno-demais-atrapalha">h pequeno demais</a>
 da derivada numérica. Aqui ele aparece na fórmula mais conhecida da escola:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Bhaskara com b muito maior que a e c: x² + 1e8 x + 1 = 0.</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># As raizes sao quase -1e8 e -1e-8.</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">b</span> <span class="o">=</span> <span class="mf">1e8</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">c</span> <span class="o">=</span> <span class="mf">1.0</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">x_grande</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">x_pequena</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>     <span class="c1"># -b + quase b: cancelamento!</span>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Bhaskara:        x1 = </span><span class="si">{</span><span class="n">x_grande</span><span class="si">:</span><span class="s2">.10e</span><span class="si">}</span><span class="s2">   x2 = </span><span class="si">{</span><span class="n">x_pequena</span><span class="si">:</span><span class="s2">.10e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="c1"># x1 * x2 = c / a: a raiz pequena sai da grande, sem subtrair quase-iguais</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="n">x_pequena_estavel</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">x_grande</span><span class="p">)</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"forma estavel:                            x2 = </span><span class="si">{</span><span class="n">x_pequena_estavel</span><span class="si">:</span><span class="s2">.10e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"conferindo: a*x2² + b*x2 + c = </span><span class="si">{</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> (Bhaskara)"</span><span class="p">)</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"            a*x2² + b*x2 + c = </span><span class="si">{</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena_estavel</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena_estavel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> (estavel)"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Bhaskara com b muito maior que a e c: x² + 1e8 x + 1 = 0.</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># As raizes sao quase -1e8 e -1e-8.</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">b</span> <span class="o">=</span> <span class="mf">1e8</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">c</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="n">delta</span> <span class="o">=</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="n">x_grande</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">x_pequena</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span>     <span class="c1"># -b + quase b: cancelamento!</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Bhaskara:        x1 = </span><span class="si">{</span><span class="n">x_grande</span><span class="si">:</span><span class="s2">.10e</span><span class="si">}</span><span class="s2">   x2 = </span><span class="si">{</span><span class="n">x_pequena</span><span class="si">:</span><span class="s2">.10e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="c1"># x1 * x2 = c / a: a raiz pequena sai da grande, sem subtrair quase-iguais</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">x_pequena_estavel</span> <span class="o">=</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">x_grande</span><span class="p">)</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"forma estavel:                            x2 = </span><span class="si">{</span><span class="n">x_pequena_estavel</span><span class="si">:</span><span class="s2">.10e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"conferindo: a*x2² + b*x2 + c = </span><span class="si">{</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> (Bhaskara)"</span><span class="p">)</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"            a*x2² + b*x2 + c = </span><span class="si">{</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena_estavel</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x_pequena_estavel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> (estavel)"</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Bhaskara:        x1 = -1.0000000000e+08   x2 = -7.4505805969e-09
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>forma estavel:                            x2 = -1.0000000000e-08
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>conferindo: a*x2² + b*x2 + c = 2.55e-01 (Bhaskara)
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>            a*x2² + b*x2 + c = 1.11e-16 (estavel)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Bhaskara:        x1 = -1.0000000000e+08   x2 = -7.4505805969e-09
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>forma estavel:                            x2 = -1.0000000000e-08
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>conferindo: a*x2² + b*x2 + c = 2.55e-01 (Bhaskara)
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>            a*x2² + b*x2 + c = 1.11e-16 (estavel)
 </code></pre></div>
 <p>Na raiz pequena, <span class="arithmatex">\(-b + \sqrt{\Delta}\)</span> subtrai dois números que concordam em quase
 todas as casas (<span class="arithmatex">\(\sqrt{\Delta} \approx b\)</span>), e a fórmula de Bhaskara erra em 25 %.
@@ -1705,7 +1772,10 @@ grande por uma divisão. A matemática é a mesma; a conta no computador, não.<
 <h2 id="numeros-grandes-demais">Números grandes demais<a class="headerlink" href="#numeros-grandes-demais" title="Permanent link">&para;</a></h2>
 <p>O <code>float</code> tem limite: o maior número que ele guarda é cerca de <span class="arithmatex">\(1{,}8 \times
 10^{308}\)</span>. Passou disso, vira <code>inf</code> (infinito), sem mensagem de erro. Inteiros de
-tamanho fixo são piores: passaram do limite, <strong>dão a volta</strong> para os negativos.</p>
+tamanho fixo, como os de um processador embarcado, são piores: passaram do limite,
+<strong>dão a volta</strong> para os negativos, como o hodômetro de um carro que passa de
+99999 e volta a 00000. O Python tem inteiros sem limite, então o exemplo imita o
+chip com uma conta de resto (<code>%</code>).</p>
 <div class="admonition info">
 <p class="admonition-title">🌍 Contexto: o voo 501 do Ariane 5 (1996)</p>
 <p>37 segundos depois do lançamento, o foguete europeu Ariane 5 desviou da rota e
@@ -1715,31 +1785,33 @@ inteiro de 16 bits. No Ariane 4, mais lento, o valor sempre cabia. No Ariane 5,
 não coube. O programa parou, e o computador reserva, que rodava o mesmo
 código, parou do mesmo jeito.</p>
 </div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Limites do tamanho dos numeros.</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"maior float:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">fatorial</span> <span class="o">=</span> <span class="mf">1.0</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">172</span><span class="p">):</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    <span class="n">fatorial</span> <span class="o">=</span> <span class="n">fatorial</span> <span class="o">*</span> <span class="n">n</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">169</span><span class="p">:</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">! = </span><span class="si">{</span><span class="n">fatorial</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="c1"># Ariane 5, 04/06/1996: a velocidade horizontal (float de 64 bits) foi</span>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1"># convertida para um inteiro de 16 bits, que so vai ate 32767.</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">velocidade</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">32767</span><span class="p">,</span> <span class="mi">40000</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="n">convertida</span> <span class="o">=</span> <span class="n">velocidade</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
-<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">v16</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">velocidade</span><span class="p">,</span> <span class="n">convertida</span><span class="p">):</span>
-<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"valor </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2"> -&gt; inteiro de 16 bits: </span><span class="si">{</span><span class="n">v16</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Limites do tamanho dos numeros.</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># 1) O float vai ate cerca de 1.8e308. Depois disso, vira inf (infinito).</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">fatorial</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">172</span><span class="p">):</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    <span class="n">fatorial</span> <span class="o">=</span> <span class="n">fatorial</span> <span class="o">*</span> <span class="n">n</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">169</span><span class="p">:</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">! = </span><span class="si">{</span><span class="n">fatorial</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="c1"># 2) Ariane 5, 04/06/1996: a velocidade horizontal foi guardada num inteiro</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="c1"># de 16 bits, que so vai de -32768 a 32767. Esta funcao faz o que o chip faz</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="c1"># com um valor que nao cabe: ele "da a volta" pelos negativos.</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">inteiro_16_bits</span><span class="p">(</span><span class="n">valor</span><span class="p">):</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">valor</span> <span class="o">+</span> <span class="mi">32768</span><span class="p">)</span> <span class="o">%</span> <span class="mi">65536</span> <span class="o">-</span> <span class="mi">32768</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">32767</span><span class="p">,</span> <span class="mi">32768</span><span class="p">,</span> <span class="mi">40000</span><span class="p">]:</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"valor </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2"> -&gt; inteiro de 16 bits: </span><span class="si">{</span><span class="n">inteiro_16_bits</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">:</span><span class="s2">6d</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>maior float: 1.7976931348623157e+308
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>169! = 4.2690680090047027e+304
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>170! = 7.257415615307994e+306
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>171! = inf
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>valor  20000 -&gt; inteiro de 16 bits:  20000
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>valor  32767 -&gt; inteiro de 16 bits:  32767
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>valor  40000 -&gt; inteiro de 16 bits: -25536
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>169! = 4.2690680090047027e+304
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>170! = 7.257415615307994e+306
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>171! = inf
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>valor  20000 -&gt; inteiro de 16 bits:  20000
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>valor  32767 -&gt; inteiro de 16 bits:  32767
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>valor  32768 -&gt; inteiro de 16 bits: -32768
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>valor  40000 -&gt; inteiro de 16 bits: -25536
 </code></pre></div>
 <p>Dois cuidados práticos saem daqui. O primeiro: calcular <span class="arithmatex">\(x^n/n!\)</span> fazendo a
 potência e o fatorial separados estoura bem antes do necessário (o fatorial passa
@@ -1750,35 +1822,35 @@ bits) precisa de uma pergunta. <strong>E se não couber?</strong></p>
 <p>O arredondamento também mora no dinheiro. Um banco guarda saldos em centavos, então
 todo rendimento tem de ser arredondado. Arredondar ou <strong>cortar</strong> os centavos parece
 um detalhe:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Mesmo assunto, outra area: um banco com um milhao de contas de poupanca.</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Cada conta rende 0,5 % ao mes e o saldo e guardado em centavos. Quanto</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># muda se o sistema ARREDONDA ou se CORTA os centavos todo mes?</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">capital</span> <span class="o">=</span> <span class="mf">1234.56</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">taxa</span> <span class="o">=</span> <span class="mf">0.005</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="n">meses</span> <span class="o">=</span> <span class="mi">120</span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="n">exato</span> <span class="o">=</span> <span class="n">capital</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">arredondado</span> <span class="o">=</span> <span class="n">capital</span>
-<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="n">cortado</span> <span class="o">=</span> <span class="n">capital</span>
-<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="k">for</span> <span class="n">mes</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meses</span><span class="p">):</span>
-<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>    <span class="n">exato</span> <span class="o">=</span> <span class="n">exato</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taxa</span><span class="p">)</span>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>    <span class="n">arredondado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">arredondado</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taxa</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>    <span class="n">cortado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">cortado</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taxa</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"sem arredondar:           R$ </span><span class="si">{</span><span class="n">exato</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"arredondando todo mes:    R$ </span><span class="si">{</span><span class="n">arredondado</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cortando todo mes:        R$ </span><span class="si">{</span><span class="n">cortado</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"diferenca por conta (corte): R$ </span><span class="si">{</span><span class="n">exato</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cortado</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="n">perda_total</span> <span class="o">=</span> <span class="p">(</span><span class="n">exato</span> <span class="o">-</span> <span class="n">cortado</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e6</span>
-<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"em um milhao de contas:      R$ </span><span class="si">{</span><span class="n">perda_total</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">"</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="s2">"."</span><span class="p">))</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Mesmo assunto, outra area: um banco com um milhao de contas de poupanca.</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># Cada conta rende 0,5 % ao mes e o saldo e guardado em centavos. Quanto</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># muda se o sistema ARREDONDA ou se CORTA os centavos todo mes?</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">capital</span> <span class="o">=</span> <span class="mf">1234.56</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">taxa</span> <span class="o">=</span> <span class="mf">0.005</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">meses</span> <span class="o">=</span> <span class="mi">120</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="n">exato</span> <span class="o">=</span> <span class="n">capital</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="n">arredondado</span> <span class="o">=</span> <span class="n">capital</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="n">cortado</span> <span class="o">=</span> <span class="n">capital</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="k">for</span> <span class="n">mes</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meses</span><span class="p">):</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    <span class="n">exato</span> <span class="o">=</span> <span class="n">exato</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taxa</span><span class="p">)</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>    <span class="n">arredondado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">arredondado</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taxa</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>    <span class="n">cortado</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">cortado</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taxa</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"sem arredondar:           R$ </span><span class="si">{</span><span class="n">exato</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"arredondando todo mes:    R$ </span><span class="si">{</span><span class="n">arredondado</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cortando todo mes:        R$ </span><span class="si">{</span><span class="n">cortado</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"diferenca por conta (corte): R$ </span><span class="si">{</span><span class="n">exato</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">cortado</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="n">perda_total</span> <span class="o">=</span> <span class="p">(</span><span class="n">exato</span> <span class="o">-</span> <span class="n">cortado</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e6</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"em um milhao de contas:      R$ </span><span class="si">{</span><span class="n">perda_total</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sem arredondar:           R$ 2246.1544
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>arredondando todo mes:    R$ 2246.09
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>cortando todo mes:        R$ 2245.38
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>diferenca por conta (corte): R$ 0.7744
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>em um milhao de contas:      R$ 774.432
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sem arredondar:           R$ 2246.1544
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>arredondando todo mes:    R$ 2246.09
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>cortando todo mes:        R$ 2245.38
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>diferenca por conta (corte): R$ 0.7744
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>em um milhao de contas:      R$ 774431.97
 </code></pre></div>
 <p>Setenta e sete centavos por conta em dez anos. Ninguém reclama de setenta e sete
 centavos. Em um milhão de contas, são <strong>mais de setecentos mil reais</strong> que mudaram
@@ -1823,8 +1895,8 @@ erros de mesmo sinal se acumulam, exatamente como no relógio do Patriot.</p>
 <h2 id="onde-isso-e-usado-de-verdade">Onde isso é usado de verdade<a class="headerlink" href="#onde-isso-e-usado-de-verdade" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Todo software de engenharia</strong> declara a tolerância com que compara números.
-  Os testes das bibliotecas <code>numpy</code> e <code>scipy</code> usam <code>assert_allclose</code>, que é o
-  <code>abs(a - b) &lt; tol</code> deste capítulo.</li>
+  Os testes das próprias bibliotecas <code>numpy</code> e <code>scipy</code> comparam resultados com
+  tolerância, exatamente como o <code>abs(a - b) &lt; tol</code> deste capítulo.</li>
 <li><strong>Sistemas financeiros</strong> guardam dinheiro como <strong>inteiro</strong> de centavos (ou em
   tipos decimais), nunca como <code>float</code>, e as regras de arredondamento são fixadas
   em norma.</li>

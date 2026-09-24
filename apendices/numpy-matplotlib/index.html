@@ -12,29 +12,31 @@
         <meta name="author" content="lacouth">
       
       
-        <link rel="canonical" href="https://lacouth.github.io/metodos_telecom-site/">
+        <link rel="canonical" href="https://lacouth.github.io/metodos_telecom-site/apendices/numpy-matplotlib/">
       
       
+        <link rel="prev" href="../formulario/">
       
-        <link rel="next" href="setup/">
+      
+        <link rel="next" href="../dados/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Métodos Numéricos — do quadro ao código</title>
+        <title>numpy e matplotlib do curso - Métodos Numéricos — do quadro ao código</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,7 +55,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#metodos-numericos-do-quadro-ao-codigo" class="md-skip">
+        <a href="#numpy-e-matplotlib-do-curso" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -94,7 +96,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
-    <a href="." title="Métodos Numéricos — do quadro ao código" class="md-header__button md-logo" aria-label="Métodos Numéricos — do quadro ao código" data-md-component="logo">
+    <a href="../.." title="Métodos Numéricos — do quadro ao código" class="md-header__button md-logo" aria-label="Métodos Numéricos — do quadro ao código" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -114,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Início
+              numpy e matplotlib do curso
             
           </span>
         </div>
@@ -232,7 +234,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Métodos Numéricos — do quadro ao código" class="md-nav__button md-logo" aria-label="Métodos Numéricos — do quadro ao código" data-md-component="logo">
+    <a href="../.." title="Métodos Numéricos — do quadro ao código" class="md-nav__button md-logo" aria-label="Métodos Numéricos — do quadro ao código" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -259,37 +261,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Início
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -305,103 +280,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#como-o-curso-ensina-do-quadro-ao-codigo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como o curso ensina: do quadro ao código
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#como-funciona" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como funciona
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mas-o-computador-ou-a-ia-nao-faz-isso-tudo-sozinho" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "Mas o computador (ou a IA) não faz isso tudo sozinho?"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#como-o-curso-e-organizado" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como o curso é organizado
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ferramentas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ferramentas
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#avaliacao" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Avaliação
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#como-estudar" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como estudar
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -438,7 +316,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="setup/" class="md-nav__link ">
+            <a href="../../setup/" class="md-nav__link ">
               
   
   
@@ -482,7 +360,7 @@
   
   
     <li class="md-nav__item">
-      <a href="setup/colab/" class="md-nav__link">
+      <a href="../../setup/colab/" class="md-nav__link">
         
   
   
@@ -542,7 +420,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="unidade0-introducao/" class="md-nav__link ">
+            <a href="../../unidade0-introducao/" class="md-nav__link ">
               
   
   
@@ -586,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="unidade0-introducao/00-modelos-e-ferramentas/" class="md-nav__link">
+      <a href="../../unidade0-introducao/00-modelos-e-ferramentas/" class="md-nav__link">
         
   
   
@@ -646,7 +524,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="unidade1-erros/" class="md-nav__link ">
+            <a href="../../unidade1-erros/" class="md-nav__link ">
               
   
   
@@ -690,7 +568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="unidade1-erros/01-erros/" class="md-nav__link">
+      <a href="../../unidade1-erros/01-erros/" class="md-nav__link">
         
   
   
@@ -752,7 +630,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="unidade2-derivadas/" class="md-nav__link ">
+            <a href="../../unidade2-derivadas/" class="md-nav__link ">
               
   
   
@@ -796,7 +674,7 @@
   
   
     <li class="md-nav__item">
-      <a href="unidade2-derivadas/02-diferencas-finitas/" class="md-nav__link">
+      <a href="../../unidade2-derivadas/02-diferencas-finitas/" class="md-nav__link">
         
   
   
@@ -824,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="unidade2-derivadas/03-derivada-de-dados/" class="md-nav__link">
+      <a href="../../unidade2-derivadas/03-derivada-de-dados/" class="md-nav__link">
         
   
   
@@ -859,7 +737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="aulas/" class="md-nav__link">
+      <a href="../../aulas/" class="md-nav__link">
         
   
   
@@ -917,7 +795,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="listas/" class="md-nav__link ">
+            <a href="../../listas/" class="md-nav__link ">
               
   
   
@@ -961,7 +839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="listas/lista00/" class="md-nav__link">
+      <a href="../../listas/lista00/" class="md-nav__link">
         
   
   
@@ -989,7 +867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="listas/lista01/" class="md-nav__link">
+      <a href="../../listas/lista01/" class="md-nav__link">
         
   
   
@@ -1017,7 +895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="listas/lista02/" class="md-nav__link">
+      <a href="../../listas/lista02/" class="md-nav__link">
         
   
   
@@ -1045,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="listas/lista03/" class="md-nav__link">
+      <a href="../../listas/lista03/" class="md-nav__link">
         
   
   
@@ -1077,8 +955,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1101,11 +981,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
@@ -1126,7 +1006,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1144,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="apendices/formulario/" class="md-nav__link">
+      <a href="../formulario/" class="md-nav__link">
         
   
   
@@ -1169,10 +1049,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="apendices/numpy-matplotlib/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    numpy e matplotlib do curso
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1188,6 +1095,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#numpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        numpy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matplotlib" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matplotlib
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-que-o-curso-usa-alem-do-basico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python que o curso usa além do básico
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1200,7 +1160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="apendices/dados/" class="md-nav__link">
+      <a href="../dados/" class="md-nav__link">
         
   
   
@@ -1228,7 +1188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="apendices/glossario/" class="md-nav__link">
+      <a href="../glossario/" class="md-nav__link">
         
   
   
@@ -1256,7 +1216,7 @@
   
   
     <li class="md-nav__item">
-      <a href="apendices/referencias/" class="md-nav__link">
+      <a href="../referencias/" class="md-nav__link">
         
   
   
@@ -1311,10 +1271,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#como-o-curso-ensina-do-quadro-ao-codigo" class="md-nav__link">
+  <a href="#numpy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Como o curso ensina: do quadro ao código
+        numpy
       
     </span>
   </a>
@@ -1322,10 +1282,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#como-funciona" class="md-nav__link">
+  <a href="#matplotlib" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Como funciona
+        matplotlib
       
     </span>
   </a>
@@ -1333,54 +1293,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mas-o-computador-ou-a-ia-nao-faz-isso-tudo-sozinho" class="md-nav__link">
+  <a href="#python-que-o-curso-usa-alem-do-basico" class="md-nav__link">
     <span class="md-ellipsis">
       
-        "Mas o computador (ou a IA) não faz isso tudo sozinho?"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#como-o-curso-e-organizado" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como o curso é organizado
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ferramentas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ferramentas
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#avaliacao" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Avaliação
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#como-estudar" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Como estudar
+        Python que o curso usa além do básico
       
     </span>
   </a>
@@ -1407,207 +1323,286 @@
   
 
 
-<h1 id="metodos-numericos-do-quadro-ao-codigo">Métodos Numéricos — do quadro ao código<a class="headerlink" href="#metodos-numericos-do-quadro-ao-codigo" title="Permanent link">&para;</a></h1>
-<p>Bem-vindo(a). Esta é a disciplina de <strong>Métodos Numéricos</strong> do CST em Sistemas de
-Telecomunicações do IFPB, campus João Pessoa.</p>
-<p>Um método numérico é uma receita para resolver com <strong>contas simples</strong>
-(somar, subtrair, multiplicar, dividir, repetir) um problema que a matemática do
-papel não resolve, ou resolve com muito trabalho: a derivada de uma tabela de
-medições, a raiz de uma equação sem fórmula, um sistema com dezenas de incógnitas,
-a área sob uma curva que ninguém sabe integrar, a tendência escondida numa série
-de dados. O computador faz essas contas milhões de vezes por segundo, e é assim
-que ele resolve quase tudo que se chama de "cálculo" em engenharia.</p>
-<h2 id="como-o-curso-ensina-do-quadro-ao-codigo">Como o curso ensina: do quadro ao código<a class="headerlink" href="#como-o-curso-ensina-do-quadro-ao-codigo" title="Permanent link">&para;</a></h2>
-<p>Cada método passa por três etapas, sempre na mesma ordem:</p>
-<ol>
-<li><strong>🧑‍🏫 No quadro.</strong> O professor deduz o método à mão: de onde vem a fórmula, por
-   que funciona e quanto ela erra. É curto, e você acompanha no caderno de papel.
-   É isso que dá a <strong>intuição</strong>: quem viu a fórmula nascer sabe quando ela vai
-   falhar.</li>
-<li><strong>Do quadro ao código.</strong> A fórmula vira poucas linhas de Python, escritas ao
-   vivo. O código <strong>espelha a fórmula</strong>: cada linha corresponde a um termo do que
-   está no quadro. Nada de truques de programação: laços, <code>if</code>, funções e <code>numpy</code>.</li>
-<li><strong>A aplicação.</strong> O mesmo método resolve problemas de <strong>áreas que não se
-   parecem</strong>: física, saúde, clima, economia, esporte, computação, oceanografia,
-   telecomunicações. O foco da disciplina é esse: <strong>usar</strong> o método num problema
-   real e saber se o resultado é confiável.</li>
-</ol>
-<div class="admonition tip">
-<p class="admonition-title">Por que tantas áreas, num curso de telecom?</p>
-<p>Porque o método <strong>não sabe</strong> de que área é o problema. A mesma função que
-calcula a tensão num indutor calcula o custo marginal de uma fábrica e os
-casos novos de uma epidemia. Quem enxerga isso consegue usar o método em
-qualquer problema que aparecer, inclusive nos de telecomunicações.</p>
-</div>
-<h2 id="como-funciona">Como funciona<a class="headerlink" href="#como-funciona" title="Permanent link">&para;</a></h2>
-<p>São <strong>dois encontros por semana</strong>, e cada capítulo tem <strong>um caderno de aula</strong> no
-Colab, que o professor segue em sala e você preenche junto
-(<a href="aulas/">Cadernos das aulas</a>). Todo caderno tem o mesmo roteiro:</p>
-<ol>
-<li>abre com o <strong>🧩 problema da aula</strong>, que vem de uma área diferente a cada
-   capítulo;</li>
-<li>a <strong>🧑‍🏫 dedução no quadro</strong>, que você acompanha no papel;</li>
-<li>o método escrito ao vivo, em passos pequenos. Antes de rodar cada passo, você
-   registra uma <strong>previsão</strong>: a previsão errada é a parte que mais ensina;</li>
-<li>os exercícios <strong>🎯 Sua vez</strong>, que se corrigem sozinhos;</li>
-<li>fecha com o <strong>🧩 problema resolvido</strong> e a lista do capítulo começada.</li>
-</ol>
-<p>Um caderno pode ocupar um encontro ou mais. Entre eles entram <strong>aulas de
-exercícios</strong> sempre que a turma precisar consolidar um assunto antes de seguir,
-com as <a href="listas/">listas</a> e os 🎯 de prática. Por isso o cronograma abaixo é
-contado em <strong>encontros por unidade</strong>, e não em datas fixas.</p>
-<h2 id="mas-o-computador-ou-a-ia-nao-faz-isso-tudo-sozinho">"Mas o computador (ou a IA) não faz isso tudo sozinho?"<a class="headerlink" href="#mas-o-computador-ou-a-ia-nao-faz-isso-tudo-sozinho" title="Permanent link">&para;</a></h2>
-<p>Faz. <code>numpy</code> e <code>scipy</code> têm uma função pronta para quase todo método deste curso, e
-um assistente de IA escreve o resto em segundos. O que nenhum dos dois faz é <strong>te
-avisar quando o número está errado</strong>.</p>
-<p>Um método numérico <strong>sempre</strong> erra um pouco, porque é uma aproximação. O perigo é
-o número que sai com 15 casas decimais, <strong>parece</strong> preciso e está errado na
-segunda. Você vai encontrar vários neste curso:</p>
+<h1 id="numpy-e-matplotlib-do-curso">numpy e matplotlib do curso<a class="headerlink" href="#numpy-e-matplotlib-do-curso" title="Permanent link">&para;</a></h1>
+<p>Esta página lista <strong>tudo</strong> o que o curso usa das bibliotecas <code>numpy</code> e
+<code>matplotlib</code>, e em que capítulo cada comando é apresentado. O curso não usa
+nenhum comando fora desta lista. Cada um é explicado, com um exemplo, numa caixa
+<strong>🧰 Comando novo</strong> no capítulo e no caderno da aula, antes do primeiro uso.</p>
+<p>Use esta página como cola: quando encontrar um comando e não lembrar o que ele
+faz, ele está aqui, com o capítulo onde a explicação completa mora.</p>
+<h2 id="numpy">numpy<a class="headerlink" href="#numpy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>O que faz</th>
+<th>Exemplo</th>
+<th>Cap.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import numpy as np</code></td>
+<td>carrega a biblioteca; tudo dela passa a ser chamado com <code>np.</code> na frente</td>
+<td><code>import numpy as np</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.sqrt</code></td>
+<td>raiz quadrada</td>
+<td><code>np.sqrt(9)</code> → <code>3.0</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.exp</code></td>
+<td>exponencial, <span class="arithmatex">\(e^x\)</span></td>
+<td><code>np.exp(1)</code> → <code>2.718...</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.tanh</code></td>
+<td>tangente hiperbólica, uma curva em S que vai de −1 a 1</td>
+<td><code>np.tanh(0)</code> → <code>0.0</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.array</code></td>
+<td>transforma uma lista de números num <strong>array</strong>, a tabela de números do numpy</td>
+<td><code>np.array([1, 2, 3])</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.linspace</code></td>
+<td><code>quantos</code> números igualmente espaçados de <code>inicio</code> a <code>fim</code>, incluindo os dois</td>
+<td><code>np.linspace(0, 1, 5)</code> → <code>[0. 0.25 0.5 0.75 1.]</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.sum</code></td>
+<td>soma de todos os elementos</td>
+<td><code>np.sum(t)</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.max</code></td>
+<td>o maior elemento</td>
+<td><code>np.max(t)</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.argmax</code></td>
+<td>a <strong>posição</strong> do maior elemento</td>
+<td><code>np.argmax(t)</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.round</code></td>
+<td>arredonda com <code>n</code> casas decimais (também um array inteiro)</td>
+<td><code>np.round(3.14159, 2)</code> → <code>3.14</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>np.floor</code></td>
+<td>arredonda <strong>para baixo</strong> (o "piso")</td>
+<td><code>np.floor(2.9)</code> → <code>2.0</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>np.float32</code></td>
+<td>número em <strong>precisão simples</strong> (cerca de 7 algarismos), a dos microcontroladores</td>
+<td><code>np.float32(0.1)</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>np.sin</code></td>
+<td>seno (ângulo em radianos)</td>
+<td><code>np.sin(np.pi / 2)</code> → <code>1.0</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>np.cos</code></td>
+<td>cosseno (ângulo em radianos)</td>
+<td><code>np.cos(0)</code> → <code>1.0</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>np.log</code></td>
+<td>logaritmo <strong>natural</strong> (base <span class="arithmatex">\(e\)</span>)</td>
+<td><code>np.log(np.exp(2))</code> → <code>2.0</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>np.pi</code></td>
+<td>o número <span class="arithmatex">\(\pi\)</span></td>
+<td><code>np.pi</code> → <code>3.14159...</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>np.loadtxt</code></td>
+<td>lê um arquivo de números (CSV) e devolve uma tabela</td>
+<td><code>np.loadtxt("a.csv", delimiter=",", skiprows=1)</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>delimiter=</code></td>
+<td>no <code>loadtxt</code>: o caractere que separa as colunas</td>
+<td><code>delimiter=","</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>skiprows=</code></td>
+<td>no <code>loadtxt</code>: quantas linhas do começo pular (o cabeçalho)</td>
+<td><code>skiprows=1</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>[:, j]</code></td>
+<td>a coluna <code>j</code> de uma tabela: todas as linhas (<code>:</code>), coluna <code>j</code></td>
+<td><code>dados[:, 0]</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>np.zeros</code></td>
+<td>um array com <code>n</code> zeros, para preencher depois</td>
+<td><code>np.zeros(3)</code> → <code>[0. 0. 0.]</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>np.min</code></td>
+<td>o menor elemento</td>
+<td><code>np.min(t)</code></td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Além dos comandos, o array tem duas propriedades que o curso usa desde o capítulo 0:</p>
 <ul>
-<li>a derivada calculada com um passo "caprichado" de <span class="arithmatex">\(10^{-15}\)</span>, pior do que com
-  um passo de <span class="arithmatex">\(0{,}1\)</span>;</li>
-<li>o alerta de cheia que dispara duas horas antes da hora, porque derivou o ruído
-  do sensor;</li>
-<li>o polinômio que passa exatamente por todos os pontos e erra feio entre eles.</li>
+<li><strong>conta elemento a elemento:</strong> <code>2 * t</code>, <code>t + 1</code>, <code>t ** 2</code> e <code>np.exp(t)</code> fazem a
+  conta em cada elemento e devolvem um array do mesmo tamanho;</li>
+<li><strong>índice e fatia iguais aos da lista:</strong> <code>t[0]</code>, <code>t[-1]</code>, <code>t[2:5]</code> e <code>len(t)</code>.</li>
 </ul>
-<p>Em nenhum desses casos o programa dá mensagem de erro. <strong>Quem tem de perceber é
-você</strong>, e para isso é preciso saber de onde a fórmula veio. Por isso o curso
-começa no quadro.</p>
-<h2 id="como-o-curso-e-organizado">Como o curso é organizado<a class="headerlink" href="#como-o-curso-e-organizado" title="Permanent link">&para;</a></h2>
+<h2 id="matplotlib">matplotlib<a class="headerlink" href="#matplotlib" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Unidade</th>
-<th>Capítulos</th>
-<th>Encontros</th>
+<th>Comando</th>
+<th>O que faz</th>
+<th>Exemplo</th>
+<th>Cap.</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="unidade0-introducao/">0 · Introdução</a></td>
-<td><a href="unidade0-introducao/00-modelos-e-ferramentas/">0. Modelos, numpy e matplotlib</a></td>
-<td>~2</td>
+<td><code>import matplotlib.pyplot as plt</code></td>
+<td>carrega a parte de gráficos; tudo passa a ser chamado com <code>plt.</code> na frente</td>
+<td><code>import matplotlib.pyplot as plt</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td><a href="unidade1-erros/">1 · Erros</a></td>
-<td><a href="unidade1-erros/01-erros/">1. Como o computador guarda números</a></td>
-<td>~2</td>
+<td><code>plt.figure</code></td>
+<td>começa uma figura nova, em branco</td>
+<td><code>plt.figure()</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td><a href="unidade2-derivadas/">2 · Derivadas</a></td>
-<td><a href="unidade2-derivadas/02-diferencas-finitas/">2. Diferenças finitas</a> · <a href="unidade2-derivadas/03-derivada-de-dados/">3. Derivando dados medidos</a></td>
-<td>~4</td>
+<td><code>plt.plot</code></td>
+<td>desenha <code>y</code> contra <code>x</code>; o terceiro argumento, opcional, é o formato: <code>"-"</code> linha, <code>"o"</code> bolinhas, <code>"."</code> pontinhos, <code>"o-"</code> os dois</td>
+<td><code>plt.plot(x, y, "o")</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>3 · Raízes e otimização</td>
-<td>4. Bisseção e falsa posição · 5. Newton e secante · 6. Otimização</td>
-<td>~6</td>
+<td><code>label=</code></td>
+<td>nome da curva, que aparece na legenda</td>
+<td><code>plt.plot(x, y, label="modelo")</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td><strong>Avaliação 1</strong></td>
-<td>revisão + prova (caps. 1 a 6)</td>
-<td>2</td>
+<td><code>plt.scatter</code></td>
+<td>desenha pontos soltos, sem linha</td>
+<td><code>plt.scatter(x, y)</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>4 · Sistemas lineares</td>
-<td>7. Eliminação de Gauss · 8. Jacobi e Gauss-Seidel</td>
-<td>~4</td>
+<td><code>color=</code></td>
+<td>cor dos pontos ou da linha</td>
+<td><code>plt.scatter(x, y, color="red")</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>5 · Interpolação</td>
-<td>9. Interpolação polinomial · 10. Runge e splines</td>
-<td>~4</td>
+<td><code>plt.xlabel</code></td>
+<td>nome do eixo horizontal (com a unidade!)</td>
+<td><code>plt.xlabel("tempo (s)")</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>6 · Integrais</td>
-<td>11. Trapézio e Simpson · 12. Integrando dados</td>
-<td>~4</td>
+<td><code>plt.ylabel</code></td>
+<td>nome do eixo vertical</td>
+<td><code>plt.ylabel("velocidade (m/s)")</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td><strong>Avaliação 2</strong></td>
-<td>revisão + prova (caps. 7 a 12)</td>
-<td>2</td>
+<td><code>plt.title</code></td>
+<td>título da figura</td>
+<td><code>plt.title("Paraquedista")</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>7 · Regressão</td>
-<td>13. Regressão linear · 14. Ajuste não linear</td>
-<td>~4</td>
+<td><code>plt.grid</code></td>
+<td>liga a grade de fundo</td>
+<td><code>plt.grid()</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>8 · Séries temporais</td>
-<td>15. Tendência, sazonalidade e previsão · 16. FFT</td>
-<td>~4</td>
+<td><code>plt.legend</code></td>
+<td>mostra a legenda com os <code>label=</code></td>
+<td><code>plt.legend()</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td><strong>Projeto final</strong></td>
-<td>apresentação dos projetos</td>
+<td><code>plt.show</code></td>
+<td>mostra a figura; é sempre o último comando</td>
+<td><code>plt.show()</code></td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>plt.loglog</code></td>
+<td>igual ao <code>plt.plot</code>, mas com os <strong>dois eixos em escala logarítmica</strong></td>
+<td><code>plt.loglog(hs, erros, "o-")</code></td>
 <td>2</td>
 </tr>
 </tbody>
 </table>
-<p>São 40 encontros no semestre (20 semanas, 67 h). O número de cada unidade já
-<strong>inclui as aulas de exercícios</strong>, e é uma estimativa: uma unidade pode ganhar um
-encontro de exercícios a mais se a turma precisar, e outra, ser mais rápida.</p>
-<div class="admonition note">
-<p class="admonition-title">Material em construção</p>
-<p>Os capítulos com link já estão publicados. Os outros entram no site à medida
-que o semestre avança.</p>
-</div>
-<h2 id="ferramentas">Ferramentas<a class="headerlink" href="#ferramentas" title="Permanent link">&para;</a></h2>
-<p>Tudo roda no <strong>Google Colab</strong>, no navegador, sem instalar nada: veja
-<a href="setup/">Ambiente</a>. As bibliotecas são as que o Colab já traz: <code>numpy</code>
-(contas com vetores), <code>matplotlib</code> (gráficos) e, para conferir resultados, <code>scipy</code>.</p>
-<h2 id="avaliacao">Avaliação<a class="headerlink" href="#avaliacao" title="Permanent link">&para;</a></h2>
+<h2 id="python-que-o-curso-usa-alem-do-basico">Python que o curso usa além do básico<a class="headerlink" href="#python-que-o-curso-usa-alem-do-basico" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Item</th>
-<th>Peso</th>
-<th>Quando</th>
-<th>Formato</th>
+<th>Recurso</th>
+<th>O que faz</th>
+<th>Exemplo</th>
+<th>Cap.</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Avaliação 1</td>
-<td>1/3</td>
-<td>depois da Unidade 3</td>
-<td><strong>parte em papel</strong> (tabela de iterações à mão, uma dedução curta, uma pergunta conceitual) + <strong>parte no Colab</strong> (métodos aplicados a problemas)</td>
+<td>f-string com casas decimais</td>
+<td><code>{x:.2f}</code> mostra <code>x</code> com 2 casas</td>
+<td><code>f"{3.14159:.2f}"</code> → <code>3.14</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>Avaliação 2</td>
-<td>1/3</td>
-<td>depois da Unidade 6</td>
-<td>mesmo formato</td>
+<td>f-string com largura</td>
+<td><code>{x:8.2f}</code> ocupa 8 caracteres (alinha colunas de tabela); <code>{n:5d}</code> faz o mesmo com um inteiro</td>
+<td><code>f"{3.1:8.2f}"</code> → <code>3.10</code></td>
+<td>0</td>
 </tr>
 <tr>
-<td>Projeto final</td>
-<td>1/3</td>
-<td>lançado na Unidade 7, apresentado no fim do semestre</td>
-<td>em grupo: <strong>regressão ou séries temporais</strong> sobre dados reais de uma área à escolha, com notebook, relatório curto e apresentação</td>
-</tr>
-<tr>
-<td>Listas</td>
-<td>bônus de até 1,0</td>
-<td>uma por capítulo</td>
-<td>cadernos do Colab com testes automáticos</td>
+<td>f-string em notação científica</td>
+<td><code>{x:.1e}</code> mostra <code>x</code> como <code>4.5e-03</code></td>
+<td><code>f"{0.0045:.1e}"</code> → <code>4.5e-03</code></td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
-<p>Na parte no Colab das avaliações, o material do curso é liberado, mas assistente
-de IA não. A parte em papel é o motivo de o curso ter as tabelas ✏️ à mão: elas
-treinam exatamente esse formato.</p>
-<h2 id="como-estudar">Como estudar<a class="headerlink" href="#como-estudar" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Refaça a dedução do quadro sem olhar.</strong> Se travar, é ali que está a lacuna.</li>
-<li><strong>Preveja antes de rodar.</strong> Escrever o que você acha que vai sair, e errar, é
-   o que fixa.</li>
-<li><strong>Confira sempre.</strong> Todo número de método numérico vem com uma pergunta: esse
-   resultado é confiável? Compare com a exata, reduza o passo, olhe o gráfico.</li>
-<li><strong>Faça a lista do capítulo.</strong> Ela começa em sala, no fim do caderno da aula,
-   e os testes dizem na hora se você acertou.</li>
-<li><strong>Leia o capítulo em pedaços</strong>, depois da aula, na seção que ficou difícil.</li>
-</ol>
 
 
 
@@ -1663,12 +1658,12 @@ treinam exatamente esse formato.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="javascripts/mathjax.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
