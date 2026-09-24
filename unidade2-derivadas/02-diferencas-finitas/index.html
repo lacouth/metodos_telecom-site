@@ -1,0 +1,1758 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Curso de Métodos Numéricos para o CST em Sistemas de Telecomunicações do IFPB João Pessoa: cada método é deduzido no quadro, escrito em poucas linhas de Python e aplicado a problemas de física, saúde, clima, economia, esporte, computação e telecomunicações.">
+      
+      
+        <meta name="author" content="lacouth">
+      
+      
+        <link rel="canonical" href="https://lacouth.github.io/metodos_telecom-site/unidade2-derivadas/02-diferencas-finitas/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../03-derivada-de-dados/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>2. Diferenças finitas - Métodos Numéricos — do quadro ao código</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-diferencas-finitas" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Métodos Numéricos — do quadro ao código" class="md-header__button md-logo" aria-label="Métodos Numéricos — do quadro ao código" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Métodos Numéricos — do quadro ao código
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Diferenças finitas
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="mudar para modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="mudar para modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="mudar para modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="mudar para modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lacouth/metodos_telecom" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    metodos_telecom
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Métodos Numéricos — do quadro ao código" class="md-nav__button md-logo" aria-label="Métodos Numéricos — do quadro ao código" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Métodos Numéricos — do quadro ao código
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lacouth/metodos_telecom" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    metodos_telecom
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../setup/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ambiente
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ambiente
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/colab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google Colab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unidade 2 · Derivadas
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unidade 2 · Derivadas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Diferenças finitas
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Diferenças finitas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-derivada-como-limite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A derivada como limite
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-quadro-as-formulas-saem-de-taylor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No quadro: as fórmulas saem de Taylor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tres-formulas-um-circuito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Três fórmulas, um circuito
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-ordem-do-erro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A ordem do erro
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quando-h-pequeno-demais-atrapalha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando h pequeno demais atrapalha
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-segunda-derivada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A segunda derivada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mesmo-metodo-outra-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo método, outra área
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#erros-comuns-deste-capitulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns deste capítulo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#onde-isso-e-usado-de-verdade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Onde isso é usado de verdade
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#para-praticar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Para praticar
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-derivada-de-dados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Derivando dados medidos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aulas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cadernos das aulas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../listas/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listas de exercícios
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Listas de exercícios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../listas/lista02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lista 02 · Diferenças finitas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../listas/lista03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lista 03 · Derivando dados medidos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apêndices
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Apêndices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/formulario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Formulário
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/dados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dados do curso
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/glossario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossário
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../apendices/referencias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-derivada-como-limite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A derivada como limite
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-quadro-as-formulas-saem-de-taylor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No quadro: as fórmulas saem de Taylor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tres-formulas-um-circuito" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Três fórmulas, um circuito
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-ordem-do-erro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A ordem do erro
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quando-h-pequeno-demais-atrapalha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quando h pequeno demais atrapalha
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-segunda-derivada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A segunda derivada
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mesmo-metodo-outra-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesmo método, outra área
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#erros-comuns-deste-capitulo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Erros comuns deste capítulo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#onde-isso-e-usado-de-verdade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Onde isso é usado de verdade
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#para-praticar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Para praticar
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="2-diferencas-finitas">2. Diferenças finitas<a class="headerlink" href="#2-diferencas-finitas" title="Permanent link">&para;</a></h1>
+<p>A derivada responde a uma pergunta que aparece em todo lugar: <strong>com que rapidez
+uma coisa está mudando?</strong> A tensão num indutor depende da rapidez com que a
+corrente muda. Uma colônia de bactérias tem uma velocidade de crescimento. O custo
+de uma fábrica tem uma taxa de aumento a cada peça extra. No cálculo, você
+aprendeu a derivar com regras: a do produto, a da cadeia. O computador não usa
+nenhuma delas. Ele usa a <strong>definição</strong> da derivada, com um <span class="arithmatex">\(h\)</span> pequeno mas não
+nulo, e faz uma conta de subtração e divisão.</p>
+<p>Este capítulo mostra de onde vêm essas contas, por que uma é melhor que a outra e
+por que, surpreendentemente, um <span class="arithmatex">\(h\)</span> pequeno demais <strong>piora</strong> o resultado.</p>
+<h2 id="a-derivada-como-limite">A derivada como limite<a class="headerlink" href="#a-derivada-como-limite" title="Permanent link">&para;</a></h2>
+<p>A definição que você viu no cálculo é</p>
+<div class="arithmatex">\[
+f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}.
+\]</div>
+<p>A fração é a inclinação da <strong>reta secante</strong> que passa por <span class="arithmatex">\((x, f(x))\)</span> e
+<span class="arithmatex">\((x+h, f(x+h))\)</span>. Quando <span class="arithmatex">\(h\)</span> encolhe, a secante gira e se aproxima da <strong>reta
+tangente</strong>, cuja inclinação é a derivada. O computador não sabe fazer o limite.
+Ele simplesmente <strong>para</strong> num <span class="arithmatex">\(h\)</span> pequeno e aceita o erro:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># A derivada como limite: a inclinacao da secante vira a da tangente</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># quando h encolhe. f(x) = x**2 tem derivada exata f'(2) = 4.</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">]:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">inclinacao</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"h = </span><span class="si">{</span><span class="n">h</span><span class="si">:</span><span class="s2">&lt;6</span><span class="si">}</span><span class="s2">  inclinacao = </span><span class="si">{</span><span class="n">inclinacao</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>h = 1       inclinacao = 5.000000
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>h = 0.1     inclinacao = 4.100000
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>h = 0.01    inclinacao = 4.010000
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>h = 0.001   inclinacao = 4.001000
+</code></pre></div>
+<p>A derivada exata de <span class="arithmatex">\(x^2\)</span> em <span class="arithmatex">\(x = 2\)</span> é <span class="arithmatex">\(4\)</span>. Cada vez que <span class="arithmatex">\(h\)</span> fica 10 vezes
+menor, o erro também fica 10 vezes menor: <span class="arithmatex">\(1\)</span>, <span class="arithmatex">\(0{,}1\)</span>, <span class="arithmatex">\(0{,}01\)</span>, <span class="arithmatex">\(0{,}001\)</span>.
+Guarde esse padrão. Na seção <a href="#a-ordem-do-erro">A ordem do erro</a> ele ganha um
+nome.</p>
+<div class="admonition tip">
+<p class="admonition-title">💡 Pense assim: o velocímetro e o GPS</p>
+<p>O velocímetro do carro mostra a velocidade <em>instantânea</em>. Um app que só
+registra onde você estava a cada minuto não tem velocímetro: ele divide a
+distância percorrida no último minuto por um minuto. É uma diferença finita.
+Quanto menor o intervalo entre os registros, mais perto do velocímetro fica a
+conta.</p>
+</div>
+<h2 id="no-quadro-as-formulas-saem-de-taylor">No quadro: as fórmulas saem de Taylor<a class="headerlink" href="#no-quadro-as-formulas-saem-de-taylor" title="Permanent link">&para;</a></h2>
+<p>A fórmula da seção anterior foi <em>tirada da definição</em>. Mas existem outras, e uma
+delas é muito melhor. Para achá-las e saber <strong>quanto erram</strong>, a ferramenta é a
+série de Taylor.</p>
+<div class="admonition abstract">
+<p class="admonition-title">🧑‍🏫 No quadro — dedução das diferenças finitas</p>
+<p><strong>1.</strong> A série de Taylor escreve <span class="arithmatex">\(f\)</span> perto de <span class="arithmatex">\(x\)</span> usando as derivadas em <span class="arithmatex">\(x\)</span>:</p>
+<div class="arithmatex">\[
+f(x+h) = f(x) + h\,f'(x) + \frac{h^2}{2}f''(x) + \frac{h^3}{6}f'''(x) + \cdots
+\]</div>
+<p><strong>2.</strong> Isole <span class="arithmatex">\(f'(x)\)</span> e jogue o resto para o lado direito:</p>
+<div class="arithmatex">\[
+f'(x) = \frac{f(x+h) - f(x)}{h} \underbrace{- \frac{h}{2}f''(x) - \cdots}_{\text{erro} \;\sim\; h}
+\]</div>
+<p>É a <strong>progressiva</strong>. O que foi jogado fora começa com <span class="arithmatex">\(h\)</span>: o erro é
+proporcional a <span class="arithmatex">\(h\)</span>, e se escreve <span class="arithmatex">\(O(h)\)</span>.</p>
+<p><strong>3.</strong> Troque <span class="arithmatex">\(h\)</span> por <span class="arithmatex">\(-h\)</span> na série do passo 1:</p>
+<div class="arithmatex">\[
+f(x-h) = f(x) - h\,f'(x) + \frac{h^2}{2}f''(x) - \frac{h^3}{6}f'''(x) + \cdots
+\]</div>
+<p>Isolando <span class="arithmatex">\(f'(x)\)</span> da mesma forma sai a <strong>regressiva</strong>,
+<span class="arithmatex">\(\dfrac{f(x) - f(x-h)}{h}\)</span>, também <span class="arithmatex">\(O(h)\)</span>.</p>
+<p><strong>4.</strong> Agora <strong>subtraia</strong> a série do passo 3 da série do passo 1. Os termos
+com <span class="arithmatex">\(f(x)\)</span> e com <span class="arithmatex">\(f''(x)\)</span> se cancelam:</p>
+<div class="arithmatex">\[
+f(x+h) - f(x-h) = 2h\,f'(x) + \frac{h^3}{3}f'''(x) + \cdots
+\]</div>
+<p><strong>5.</strong> Divida por <span class="arithmatex">\(2h\)</span>:</p>
+<div class="arithmatex">\[
+f'(x) = \frac{f(x+h) - f(x-h)}{2h} \underbrace{- \frac{h^2}{6}f'''(x) - \cdots}_{\text{erro} \;\sim\; h^2}
+\]</div>
+<p>É a <strong>central</strong>. O termo com <span class="arithmatex">\(h\)</span> sumiu no cancelamento, e o erro que sobra
+começa em <span class="arithmatex">\(h^2\)</span>. Ela é <span class="arithmatex">\(O(h^2)\)</span>.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Fórmula</th>
+<th>Expressão</th>
+<th>Erro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>progressiva</td>
+<td><span class="arithmatex">\(\dfrac{f(x+h) - f(x)}{h}\)</span></td>
+<td><span class="arithmatex">\(O(h)\)</span></td>
+</tr>
+<tr>
+<td>regressiva</td>
+<td><span class="arithmatex">\(\dfrac{f(x) - f(x-h)}{h}\)</span></td>
+<td><span class="arithmatex">\(O(h)\)</span></td>
+</tr>
+<tr>
+<td>central</td>
+<td><span class="arithmatex">\(\dfrac{f(x+h) - f(x-h)}{2h}\)</span></td>
+<td><span class="arithmatex">\(O(h^2)\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">🌍 Contexto: o que quer dizer <span class="arithmatex">\(O(h)\)</span> e <span class="arithmatex">\(O(h^2)\)</span></p>
+<p>É uma forma curta de dizer <strong>como o erro encolhe quando <span class="arithmatex">\(h\)</span> encolhe</strong>. Um erro
+<span class="arithmatex">\(O(h)\)</span> cai na mesma proporção que <span class="arithmatex">\(h\)</span>: <span class="arithmatex">\(h\)</span> dez vezes menor, erro dez vezes
+menor. Um erro <span class="arithmatex">\(O(h^2)\)</span> cai com o <strong>quadrado</strong>: <span class="arithmatex">\(h\)</span> dez vezes menor, erro cem
+vezes menor. Não diz o tamanho do erro, e sim a <strong>velocidade</strong> com que ele
+some.</p>
+</div>
+<h2 id="tres-formulas-um-circuito">Três fórmulas, um circuito<a class="headerlink" href="#tres-formulas-um-circuito" title="Permanent link">&para;</a></h2>
+<div class="admonition info">
+<p class="admonition-title">🌍 Contexto: a tensão no indutor</p>
+<p>Um indutor (uma bobina de fio) reage à <strong>variação</strong> da corrente, e não à
+corrente em si: <span class="arithmatex">\(v = L\,\dfrac{di}{dt}\)</span>. Com corrente constante, não há tensão
+nenhuma. Com corrente mudando depressa, aparece tensão alta. É por isso que
+desligar um motor de uma vez pode gerar uma faísca. <span class="arithmatex">\(L\)</span> é a indutância, em
+henry (H).</p>
+</div>
+<p>A corrente num circuito RLC amortecido é <span class="arithmatex">\(i(t) = e^{-0{,}5t}\sin(2t)\)</span> ampères.
+Qual a tensão num indutor de <span class="arithmatex">\(0{,}2\)</span> H em <span class="arithmatex">\(t = 1\)</span> s? As três fórmulas, lado a
+lado, com <span class="arithmatex">\(h = 0{,}1\)</span>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Tensao num indutor: v = L * di/dt. A corrente i(t) veio de um modelo do</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># circuito; a derivada sai por diferencas finitas, com h = 0.1 s.</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">L</span> <span class="o">=</span> <span class="mf">0.2</span>          <span class="c1"># indutancia, em henry</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">i</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>      <span class="c1"># corrente, em ampere</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">t</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">h</span> <span class="o">=</span> <span class="mf">0.1</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">progressiva</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">regressiva</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">central</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">i</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c1"># derivada exata, feita a mao (regra do produto), so para medir o erro</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="n">exata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exata       di/dt = </span><span class="si">{</span><span class="n">exata</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> A/s"</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="k">for</span> <span class="n">nome</span><span class="p">,</span> <span class="n">aprox</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">"progressiva"</span><span class="p">,</span> <span class="n">progressiva</span><span class="p">),</span> <span class="p">(</span><span class="s2">"regressiva"</span><span class="p">,</span> <span class="n">regressiva</span><span class="p">),</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>                    <span class="p">(</span><span class="s2">"central"</span><span class="p">,</span> <span class="n">central</span><span class="p">)]:</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    <span class="n">erro</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">aprox</span> <span class="o">-</span> <span class="n">exata</span><span class="p">)</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">exata</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nome</span><span class="si">:</span><span class="s2">&lt;11</span><span class="si">}</span><span class="s2"> di/dt = </span><span class="si">{</span><span class="n">aprox</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> A/s   erro = </span><span class="si">{</span><span class="n">erro</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %"</span><span class="p">)</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"tensao no indutor (central): v = </span><span class="si">{</span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">central</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> V"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>exata       di/dt = -0.780570 A/s
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>progressiva di/dt = -0.850549 A/s   erro = 8.965 %
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>regressiva  di/dt = -0.694359 A/s   erro = 11.045 %
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>central     di/dt = -0.772454 A/s   erro = 1.040 %
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>tensao no indutor (central): v = -0.1545 V
+</code></pre></div>
+<p>Mesmo <span class="arithmatex">\(h\)</span>, mesmo número de avaliações de <span class="arithmatex">\(i(t)\)</span>, e a central erra quase <strong>nove
+vezes menos</strong>. A progressiva erra para um lado e a regressiva para o outro, e a
+central é exatamente a média das duas: os erros se compensam. É o cancelamento do
+passo 4 da dedução, visto em números.</p>
+<div class="admonition warning">
+<p class="admonition-title">Por que calcular a derivada exata, se o objetivo é não precisar dela?</p>
+<p>Só para <strong>medir o erro</strong> enquanto se aprende. Na vida real, quem tem a fórmula
+derivada à mão não precisa de diferenças finitas. O método serve quando <span class="arithmatex">\(f\)</span> é
+um programa, uma simulação ou uma tabela de medições, que é o
+<a href="../03-derivada-de-dados/">capítulo 3</a>.</p>
+</div>
+<h2 id="a-ordem-do-erro">A ordem do erro<a class="headerlink" href="#a-ordem-do-erro" title="Permanent link">&para;</a></h2>
+<p>A tabela da dedução promete que a progressiva é <span class="arithmatex">\(O(h)\)</span> e a central é <span class="arithmatex">\(O(h^2)\)</span>.
+Dá para <strong>ver</strong> isso: basta cortar <span class="arithmatex">\(h\)</span> pela metade várias vezes e medir quanto o
+erro cai.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># O que acontece com o erro quando h cai pela metade?</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">exata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>          <span class="c1"># a derivada de e^x e o proprio e^x</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">hs</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">erros_prog</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">erros_cent</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">h</span> <span class="o">=</span> <span class="mf">0.4</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="k">for</span> <span class="n">passo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>    <span class="n">prog</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="n">cent</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="n">hs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="n">erros_prog</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">prog</span> <span class="o">-</span> <span class="n">exata</span><span class="p">))</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="n">erros_cent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">cent</span> <span class="o">-</span> <span class="n">exata</span><span class="p">))</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"    h       erro prog.   erro central"</span><span class="p">)</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">)):</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">hs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">erros_prog</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">     </span><span class="si">{</span><span class="n">erros_cent</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="nb">print</span><span class="p">()</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"quanto o erro caiu a cada vez que h caiu pela metade:"</span><span class="p">)</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">)):</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>    <span class="n">razao_prog</span> <span class="o">=</span> <span class="n">erros_prog</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">erros_prog</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="n">razao_cent</span> <span class="o">=</span> <span class="n">erros_cent</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">erros_cent</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"progressiva: </span><span class="si">{</span><span class="n">razao_prog</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x   central: </span><span class="si">{</span><span class="n">razao_cent</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x"</span><span class="p">)</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">erros_prog</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"progressiva  O(h)"</span><span class="p">)</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">erros_cent</span><span class="p">,</span> <span class="s2">"s-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"central  O(h²)"</span><span class="p">)</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="n">plt</span><span class="o">.</span><span class="n">minorticks_off</span><span class="p">()</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">hs</span><span class="p">)</span>          <span class="c1"># marca no eixo exatamente os h usados</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"h"</span><span class="p">)</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"erro absoluto"</span><span class="p">)</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Erro × h em escala log-log"</span><span class="p">)</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>    h       erro prog.   erro central
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>0.4000   6.24e-01     7.31e-02
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>0.2000   2.91e-01     1.82e-02
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>0.1000   1.41e-01     4.53e-03
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>0.0500   6.91e-02     1.13e-03
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>0.0250   3.43e-02     2.83e-04
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>0.0125   1.71e-02     7.08e-05
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>quanto o erro caiu a cada vez que h caiu pela metade:
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>progressiva: 2.15x   central: 4.02x
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>progressiva: 2.07x   central: 4.01x
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>progressiva: 2.03x   central: 4.00x
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>progressiva: 2.02x   central: 4.00x
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>progressiva: 2.01x   central: 4.00x
+</code></pre></div>
+<p><img alt="Erro × h em log-log: duas retas, a da central com o dobro da inclinação" src="../../assets/figuras/cap02_ordem_do_erro_1.png" /></p>
+<p>Com <span class="arithmatex">\(h\)</span> pela metade, o erro da progressiva cai <strong>2 vezes</strong> (<span class="arithmatex">\(2^1\)</span>) e o da central
+cai <strong>4 vezes</strong> (<span class="arithmatex">\(2^2\)</span>). O expoente é a ordem. No gráfico log-log, cada método
+vira uma <strong>reta</strong>, e a inclinação da reta é a ordem: a da central é o dobro da
+inclinação da progressiva.</p>
+<div class="admonition tip">
+<p class="admonition-title">💡 Pense assim: por que log-log?</p>
+<p>Um erro que se comporta como <span class="arithmatex">\(C\,h^p\)</span> vira, depois de tirar o log dos dois
+lados, <span class="arithmatex">\(\log(\text{erro}) = \log C + p\,\log h\)</span>. É a equação de uma reta, com
+inclinação <span class="arithmatex">\(p\)</span>. O gráfico log-log transforma "qual a ordem do método?" em
+"qual a inclinação da reta?". Você vai reencontrar esse truque na regressão
+(capítulo 14).</p>
+</div>
+<h2 id="quando-h-pequeno-demais-atrapalha">Quando h pequeno demais atrapalha<a class="headerlink" href="#quando-h-pequeno-demais-atrapalha" title="Permanent link">&para;</a></h2>
+<p>Se a central melhora 100 vezes a cada <span class="arithmatex">\(h\)</span> dez vezes menor, por que não usar
+logo <span class="arithmatex">\(h = 10^{-15}\)</span>?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Se h menor e sempre melhor, por que nao usar h = 1e-15?</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">exata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">hs</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="n">erros</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="n">h</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>    <span class="n">cent</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="n">hs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="n">erros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">cent</span> <span class="o">-</span> <span class="n">exata</span><span class="p">))</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"h = 1e-</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">   derivada = </span><span class="si">{</span><span class="n">cent</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2">   erro = </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">cent</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">exata</span><span class="p">)</span><span class="si">:</span><span class="s2">.1e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">hs</span><span class="p">,</span> <span class="n">erros</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">)</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"h"</span><span class="p">)</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"erro absoluto"</span><span class="p">)</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Diferença central de e^x em x = 1"</span><span class="p">)</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">"both"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>h = 1e-01   derivada = 2.722814563947   erro = 4.5e-03
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>h = 1e-02   derivada = 2.718327133383   erro = 4.5e-05
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>h = 1e-03   derivada = 2.718282281506   erro = 4.5e-07
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>h = 1e-04   derivada = 2.718281832990   erro = 4.5e-09
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>h = 1e-05   derivada = 2.718281828518   erro = 5.9e-11
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>h = 1e-06   derivada = 2.718281828296   erro = 1.6e-10
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>h = 1e-07   derivada = 2.718281828518   erro = 5.9e-11
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>h = 1e-08   derivada = 2.718281821856   erro = 6.6e-09
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>h = 1e-09   derivada = 2.718281821856   erro = 6.6e-09
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>h = 1e-10   derivada = 2.718281155722   erro = 6.7e-07
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>h = 1e-11   derivada = 2.718292257953   erro = 1.0e-05
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>h = 1e-12   derivada = 2.718492098097   erro = 2.1e-04
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>h = 1e-13   derivada = 2.717825964282   erro = 4.6e-04
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>h = 1e-14   derivada = 2.708944180085   erro = 9.3e-03
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>h = 1e-15   derivada = 2.886579864025   erro = 1.7e-01
+</code></pre></div>
+<p><img alt="Erro × h: um V, que desce até h ≈ 1e-5 e depois volta a subir" src="../../assets/figuras/cap02_h_pequeno_demais_1.png" /></p>
+<p>O erro desce até <span class="arithmatex">\(h \approx 10^{-5}\)</span> e depois <strong>volta a subir</strong>. Em
+<span class="arithmatex">\(h = 10^{-15}\)</span> o resultado é pior do que com <span class="arithmatex">\(h = 0{,}1\)</span>. São dois erros
+brigando:</p>
+<ul>
+<li>o <strong>erro de truncamento</strong>, que é a parte da série de Taylor jogada fora. Ele
+  <strong>cai</strong> com <span class="arithmatex">\(h\)</span>, como <span class="arithmatex">\(h^2\)</span>;</li>
+<li>o <strong>erro de arredondamento</strong>. O computador guarda cerca de 16 algarismos
+  significativos. Com <span class="arithmatex">\(h\)</span> minúsculo, <span class="arithmatex">\(f(x+h)\)</span> e <span class="arithmatex">\(f(x-h)\)</span> ficam quase iguais, e a
+  subtração <strong>apaga</strong> os algarismos que eram iguais: sobra só o "lixo" das
+  últimas casas. Esse lixo ainda é dividido por <span class="arithmatex">\(2h\)</span>, que é minúsculo. Esse erro
+  <strong>cresce</strong> quando <span class="arithmatex">\(h\)</span> diminui, como <span class="arithmatex">\(1/h\)</span>.</li>
+</ul>
+<p>O melhor <span class="arithmatex">\(h\)</span> fica no fundo do V, onde os dois se equilibram. Para a central em
+precisão dupla, isso fica perto de <span class="arithmatex">\(10^{-5}\)</span> a <span class="arithmatex">\(10^{-6}\)</span>. É o mesmo
+"cancelamento catastrófico" do capítulo 1: subtrair números quase iguais destrói
+algarismos significativos.</p>
+<div class="admonition danger">
+<p class="admonition-title">💥 Quebre o método</p>
+<p>Rode o exemplo trocando a central pela progressiva. O fundo do V muda de
+lugar (vai para perto de <span class="arithmatex">\(10^{-8}\)</span>) e fica mais alto. Um método de ordem menor
+não só erra mais: ele também tem <strong>menos margem</strong> antes de o arredondamento
+dominar.</p>
+</div>
+<h2 id="a-segunda-derivada">A segunda derivada<a class="headerlink" href="#a-segunda-derivada" title="Permanent link">&para;</a></h2>
+<p>A segunda derivada mede se a variação está <strong>acelerando ou freando</strong>. Ela sai da
+mesma ideia, e a dedução é ainda mais curta.</p>
+<div class="admonition abstract">
+<p class="admonition-title">🧑‍🏫 No quadro — a segunda derivada central</p>
+<p><strong>1.</strong> Some as séries dos passos 1 e 3 da dedução anterior, em vez de subtrair.
+Agora quem se cancela são os termos <strong>ímpares</strong> (<span class="arithmatex">\(f'\)</span> e <span class="arithmatex">\(f'''\)</span>):</p>
+<div class="arithmatex">\[
+f(x+h) + f(x-h) = 2f(x) + h^2 f''(x) + \frac{h^4}{12}f''''(x) + \cdots
+\]</div>
+<p><strong>2.</strong> Isole <span class="arithmatex">\(f''(x)\)</span>:</p>
+<div class="arithmatex">\[
+f''(x) = \frac{f(x+h) - 2f(x) + f(x-h)}{h^2} + O(h^2)
+\]</div>
+<p>Os pesos <span class="arithmatex">\(1, -2, 1\)</span> valem a pena guardar: são a "assinatura" da segunda
+derivada, e reaparecem na simulação de calor e de ondas.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">🌍 Contexto: crescimento logístico</p>
+<p>Uma colônia de bactérias num frasco cresce devagar no começo (poucas
+bactérias), depois explode e, quando o alimento começa a faltar, freia até
+parar. Essa curva em S se chama <strong>logística</strong>. O ponto em que o crescimento
+para de acelerar e começa a frear é o <strong>ponto de inflexão</strong>, onde
+<span class="arithmatex">\(P''(t) = 0\)</span>. É o momento de maior velocidade de crescimento. Em epidemias, é
+o "pico" de casos novos.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Crescimento de uma colonia de bacterias (modelo logistico).</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># P'' &gt; 0: o crescimento esta acelerando; P'' &lt; 0: esta freando.</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># O instante em que P'' troca de sinal e o ponto de inflexao.</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">P</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="k">return</span> <span class="mi">1000</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">99</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">t</span><span class="p">))</span>    <span class="c1"># bacterias (milhares), t em horas</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">h</span> <span class="o">=</span> <span class="mf">0.01</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="nb">print</span><span class="p">(</span><span class="s2">" t (h)   P'(t)     P''(t)"</span><span class="p">)</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">]:</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">P</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">P</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">P</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">d1</span><span class="si">:</span><span class="s2">7.2f</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">d2</span><span class="si">:</span><span class="s2">8.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"inflexao exata: t = ln(99)/0.5 = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">0.5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> h"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a> t (h)   P'(t)     P''(t)
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>   0      4.95      2.426
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>   4     32.31     13.913
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>   8    114.55     16.557
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>   9    124.72      2.964
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  10    120.01    -11.985
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  12     79.11    -23.966
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  16     15.56     -7.278
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>inflexao exata: t = ln(99)/0.5 = 9.19 h
+</code></pre></div>
+<p>A coluna <span class="arithmatex">\(P''\)</span> troca de sinal entre <span class="arithmatex">\(t = 9\)</span> e <span class="arithmatex">\(t = 10\)</span>, e a coluna <span class="arithmatex">\(P'\)</span> é máxima
+ali. O ponto de inflexão exato é <span class="arithmatex">\(t \approx 9{,}19\)</span> h. Achar <strong>onde</strong> <span class="arithmatex">\(P''\)</span> vale
+zero com precisão é um problema de raiz de equação, que é a Unidade 3.</p>
+<h2 id="mesmo-metodo-outra-area">Mesmo método, outra área<a class="headerlink" href="#mesmo-metodo-outra-area" title="Permanent link">&para;</a></h2>
+<p>Depois de escrita "solta" algumas vezes, a fórmula vira <strong>função</strong>. A partir daí,
+o mesmo código serve para qualquer <span class="arithmatex">\(f\)</span>: basta passar outra função como
+argumento. Aqui, economia.</p>
+<div class="admonition info">
+<p class="admonition-title">🌍 Contexto: custo marginal</p>
+<p>Numa fábrica, o <strong>custo marginal</strong> é quanto custa produzir <strong>uma peça a mais</strong>.
+É a derivada do custo total <span class="arithmatex">\(C(q)\)</span> em relação à quantidade <span class="arithmatex">\(q\)</span>. É o número que
+decide se vale a pena aceitar uma encomenda extra: se o preço de venda é maior
+que o custo marginal, vale.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Depois de escrever as formulas soltas, elas viram funcoes: o mesmo codigo</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># serve para qualquer f. Aqui, custo marginal numa fabrica.</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">progressiva</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">central</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="k">def</span><span class="w"> </span><span class="nf">custo</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>    <span class="c1"># custo total (R$) para produzir q pecas por dia</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>    <span class="k">return</span> <span class="mi">5000</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">q</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.00001</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mi">3</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="n">q</span> <span class="o">=</span> <span class="mi">500</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"custo de 500 pecas: R$ </span><span class="si">{</span><span class="n">custo</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"custo marginal (progressiva, h = 1): R$ </span><span class="si">{</span><span class="n">progressiva</span><span class="p">(</span><span class="n">custo</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> por peca"</span><span class="p">)</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"custo marginal (central, h = 1):     R$ </span><span class="si">{</span><span class="n">central</span><span class="p">(</span><span class="n">custo</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> por peca"</span><span class="p">)</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exato, C'(500) = 12 + 0.02*500 + 0.00003*500**2 = R$ </span><span class="si">{</span><span class="mi">12</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.02</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.00003</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">500</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>custo de 500 pecas: R$ 14750.00
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>custo marginal (progressiva, h = 1): R$ 29.5250 por peca
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>custo marginal (central, h = 1):     R$ 29.5000 por peca
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>exato, C'(500) = 12 + 0.02*500 + 0.00003*500**2 = R$ 29.5000
+</code></pre></div>
+<p><code>progressiva</code> e <code>central</code> não sabem nada de economia. Elas recebem <strong>uma função</strong>
+<code>f</code> e a chamam, seja ela o custo da fábrica, a corrente do circuito ou a colônia
+de bactérias. Com <span class="arithmatex">\(h = 1\)</span> (uma peça), a central acerta o custo marginal na quarta
+casa decimal. A progressiva erra em 2,5 centavos por peça, o que vira dinheiro
+numa encomenda de dez mil peças.</p>
+<h2 id="erros-comuns-deste-capitulo">Erros comuns deste capítulo<a class="headerlink" href="#erros-comuns-deste-capitulo" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Sintoma</th>
+<th>Causa provável</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a central dá resultado pior que a progressiva</td>
+<td>faltou o <code>2</code> no denominador: <code>(f(x+h) - f(x-h)) / h</code> dá o <strong>dobro</strong> da derivada</td>
+</tr>
+<tr>
+<td><code>(f(x+h) - f(x-h)) / 2*h</code> dá lixo</td>
+<td>precedência: o Python divide por 2 e <strong>multiplica</strong> por <code>h</code>. Use <code>/ (2 * h)</code></td>
+</tr>
+<tr>
+<td>derivada absurda com <code>h = 1e-15</code></td>
+<td>cancelamento catastrófico: <span class="arithmatex">\(h\)</span> pequeno demais (veja <a href="#quando-h-pequeno-demais-atrapalha">a seção</a>)</td>
+</tr>
+<tr>
+<td>a segunda derivada sai com o sinal certo mas 100× maior</td>
+<td>usou <code>h</code> no denominador em vez de <code>h**2</code></td>
+</tr>
+<tr>
+<td><code>TypeError: 'float' object is not callable</code></td>
+<td>passou <code>f(x)</code> (um número) onde a função esperava <code>f</code> (a função)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="onde-isso-e-usado-de-verdade">Onde isso é usado de verdade<a class="headerlink" href="#onde-isso-e-usado-de-verdade" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Simulação de tudo que muda no espaço</strong>: calor numa peça, ondas numa corda,
+  campo eletromagnético numa antena (método FDTD). Os pesos <span class="arithmatex">\(1, -2, 1\)</span> da segunda
+  derivada estão no centro desses simuladores.</li>
+<li><strong>Otimização e aprendizado de máquina</strong>: quando o gradiente de um modelo é
+  difícil de obter, ele é estimado por diferenças finitas. Mesmo quando não é, as
+  bibliotecas o conferem com diferenças finitas ("gradient check").</li>
+<li><strong>Controle</strong>: a parte "D" de um controlador PID (piloto automático, drone,
+  forno industrial) é uma diferença finita do erro medido.</li>
+<li><strong>Finanças</strong>: as "gregas" de uma opção (quanto o preço muda se a ação subir um
+  pouco) são calculadas por diferenças finitas nos modelos de precificação.</li>
+</ul>
+<h2 id="resumo">Resumo<a class="headerlink" href="#resumo" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A derivada numérica troca o limite por um <span class="arithmatex">\(h\)</span> pequeno <strong>fixo</strong>.</li>
+<li>A série de Taylor deduz as fórmulas e diz quanto cada uma erra: progressiva e
+  regressiva são <span class="arithmatex">\(O(h)\)</span>, central é <span class="arithmatex">\(O(h^2)\)</span>.</li>
+<li>A ordem se <strong>vê</strong> cortando <span class="arithmatex">\(h\)</span> pela metade (o erro cai <span class="arithmatex">\(2^p\)</span> vezes) ou pela
+  inclinação da reta no gráfico log-log.</li>
+<li><span class="arithmatex">\(h\)</span> pequeno demais piora tudo: o arredondamento cresce como <span class="arithmatex">\(1/h\)</span>. Existe um
+  <span class="arithmatex">\(h\)</span> ótimo.</li>
+<li>A segunda derivada central usa os pesos <span class="arithmatex">\(1, -2, 1\)</span> e divide por <span class="arithmatex">\(h^2\)</span>.</li>
+<li>Escrita como função que recebe <code>f</code>, a mesma fórmula serve para qualquer área.</li>
+</ul>
+<h2 id="para-praticar">Para praticar<a class="headerlink" href="#para-praticar" title="Permanent link">&para;</a></h2>
+<p>A <a href="../../listas/lista02/">Lista 02</a> começa à mão (✏️, como na prova) e termina com
+funções que calculam derivadas de circuitos, de custos e de curvas de
+crescimento. Ela também pede para achar o melhor <span class="arithmatex">\(h\)</span>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar para o topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.indexes", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
