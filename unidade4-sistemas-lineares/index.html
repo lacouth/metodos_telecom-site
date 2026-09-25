@@ -18,7 +18,7 @@
         <link rel="prev" href="../avaliacoes/simulado-a1/">
       
       
-        <link rel="next" href="07-do-problema-ao-sistema/">
+        <link rel="next" href="07-eliminacao-gauss/">
       
       
         
@@ -1097,14 +1097,14 @@
   
   
     <li class="md-nav__item">
-      <a href="07-do-problema-ao-sistema/" class="md-nav__link">
+      <a href="07-eliminacao-gauss/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    7. Do problema ao sistema
+    7. Eliminação de Gauss
   
 
     
@@ -1125,14 +1125,14 @@
   
   
     <li class="md-nav__item">
-      <a href="08-eliminacao-gauss/" class="md-nav__link">
+      <a href="08-jacobi-gauss-seidel/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    8. Eliminação de Gauss
+    8. Jacobi e Gauss-Seidel
   
 
     
@@ -1153,14 +1153,14 @@
   
   
     <li class="md-nav__item">
-      <a href="09-jacobi-gauss-seidel/" class="md-nav__link">
+      <a href="09-do-problema-ao-sistema/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    9. Jacobi e Gauss-Seidel
+    9. Do problema ao sistema
   
 
     
@@ -2282,7 +2282,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 07 · Do problema ao sistema
+    Lista 07 · Eliminação de Gauss
   
 
     
@@ -2310,7 +2310,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 08 · Eliminação de Gauss
+    Lista 08 · Jacobi e Gauss-Seidel
   
 
     
@@ -2338,7 +2338,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 09 · Jacobi e Gauss-Seidel
+    Lista 09 · Do problema ao sistema
   
 
     
@@ -2896,9 +2896,9 @@
 <p><strong>Cerca de 5 encontros</strong>, com as aulas de exercícios. Muitos problemas têm várias
 incógnitas ligadas entre si: correntes num circuito, alimentos numa dieta, a
 posição de um celular, a temperatura em cada ponto de uma placa. Quando as ligações
-são lineares, o problema é um sistema <span class="arithmatex">\(A\,x = b\)</span>. Esta unidade começa pela parte que
-nenhuma biblioteca faz por você, <strong>montar</strong> o sistema a partir do problema, e depois
-apresenta o método direto (que escalona) e os iterativos (que chutam e melhoram).</p>
+são lineares, o problema é um sistema <span class="arithmatex">\(A\,x = b\)</span>. Esta unidade apresenta o método
+direto (que escalona) e os iterativos (que chutam e melhoram), e termina com a parte
+que nenhuma biblioteca faz por você: <strong>montar</strong> o sistema a partir do problema.</p>
 <table>
 <thead>
 <tr>
@@ -2910,22 +2910,22 @@ apresenta o método direto (que escalona) e os iterativos (que chutam e melhoram
 </thead>
 <tbody>
 <tr>
-<td><a href="07-do-problema-ao-sistema/">7. Do problema ao sistema</a></td>
-<td>montagem de <span class="arithmatex">\(A\,x = b\)</span>, <code>np.linalg.solve</code>, conferência</td>
-<td>o que é linha e o que é coluna: da tabela à matriz</td>
-<td>feira, fábrica, mistura, tanques, circuito de malhas, semáforo pendurado, trânsito num quarteirão</td>
-</tr>
-<tr>
-<td><a href="08-eliminacao-gauss/">8. Eliminação de Gauss</a></td>
+<td><a href="07-eliminacao-gauss/">7. Eliminação de Gauss</a></td>
 <td>eliminação, substituição, pivotamento</td>
 <td>o escalonamento em laços e o perigo do pivô pequeno</td>
 <td>circuito de malhas, dieta, localização de um celular por três torres</td>
 </tr>
 <tr>
-<td><a href="09-jacobi-gauss-seidel/">9. Jacobi e Gauss-Seidel</a></td>
+<td><a href="08-jacobi-gauss-seidel/">8. Jacobi e Gauss-Seidel</a></td>
 <td>Jacobi, Gauss-Seidel</td>
 <td>isolar cada incógnita e iterar; a dominância diagonal</td>
 <td>placa aquecida, PageRank, tensão ao longo de um cabo</td>
+</tr>
+<tr>
+<td><a href="09-do-problema-ao-sistema/">9. Do problema ao sistema</a></td>
+<td>montagem de <span class="arithmatex">\(A\,x = b\)</span>, <code>np.linalg.solve</code>, conferência</td>
+<td>o que é linha e o que é coluna: da tabela à matriz</td>
+<td>feira, fábrica, mistura, tanques, circuito de malhas, semáforo pendurado, trânsito num quarteirão</td>
 </tr>
 </tbody>
 </table>

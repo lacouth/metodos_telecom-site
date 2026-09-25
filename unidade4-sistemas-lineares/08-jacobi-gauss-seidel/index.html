@@ -12,13 +12,13 @@
         <meta name="author" content="lacouth">
       
       
-        <link rel="canonical" href="https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/09-jacobi-gauss-seidel/">
+        <link rel="canonical" href="https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/08-jacobi-gauss-seidel/">
       
       
-        <link rel="prev" href="../08-eliminacao-gauss/">
+        <link rel="prev" href="../07-eliminacao-gauss/">
       
       
-        <link rel="next" href="../../unidade5-interpolacao/">
+        <link rel="next" href="../09-do-problema-ao-sistema/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>9. Jacobi e Gauss-Seidel - Métodos Numéricos — do quadro ao código</title>
+        <title>8. Jacobi e Gauss-Seidel - Métodos Numéricos — do quadro ao código</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#9-jacobi-e-gauss-seidel" class="md-skip">
+        <a href="#8-jacobi-e-gauss-seidel" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              9. Jacobi e Gauss-Seidel
+              8. Jacobi e Gauss-Seidel
             
           </span>
         </div>
@@ -1097,42 +1097,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../07-do-problema-ao-sistema/" class="md-nav__link">
+      <a href="../07-eliminacao-gauss/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    7. Do problema ao sistema
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../08-eliminacao-gauss/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    8. Eliminação de Gauss
+    7. Eliminação de Gauss
   
 
     
@@ -1169,7 +1141,7 @@
   <span class="md-ellipsis">
     
   
-    9. Jacobi e Gauss-Seidel
+    8. Jacobi e Gauss-Seidel
   
 
     
@@ -1187,7 +1159,7 @@
   <span class="md-ellipsis">
     
   
-    9. Jacobi e Gauss-Seidel
+    8. Jacobi e Gauss-Seidel
   
 
     
@@ -1326,6 +1298,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-do-problema-ao-sistema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Do problema ao sistema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2439,7 +2439,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 07 · Do problema ao sistema
+    Lista 07 · Eliminação de Gauss
   
 
     
@@ -2467,7 +2467,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 08 · Eliminação de Gauss
+    Lista 08 · Jacobi e Gauss-Seidel
   
 
     
@@ -2495,7 +2495,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 09 · Jacobi e Gauss-Seidel
+    Lista 09 · Do problema ao sistema
   
 
     
@@ -3167,8 +3167,8 @@
   
 
 
-<h1 id="9-jacobi-e-gauss-seidel">9. Jacobi e Gauss-Seidel<a class="headerlink" href="#9-jacobi-e-gauss-seidel" title="Permanent link">&para;</a></h1>
-<p>A eliminação de Gauss do <a href="../08-eliminacao-gauss/">capítulo 8</a> resolve qualquer
+<h1 id="8-jacobi-e-gauss-seidel">8. Jacobi e Gauss-Seidel<a class="headerlink" href="#8-jacobi-e-gauss-seidel" title="Permanent link">&para;</a></h1>
+<p>A eliminação de Gauss do <a href="../07-eliminacao-gauss/">capítulo 7</a> resolve qualquer
 sistema, mas tem um custo: para <span class="arithmatex">\(n\)</span> equações, cerca de <span class="arithmatex">\(n^3/3\)</span> contas. Com
 <span class="arithmatex">\(n = 1\,000\)</span>, são 300 milhões, o que é rápido num computador. Com <span class="arithmatex">\(n = 1\,000\,000\)</span> (a
 temperatura em cada ponto de um motor, a pressão em cada ponto de uma represa),
@@ -3408,7 +3408,7 @@ pega a coluna <code>j</code> inteira.</p>
 <a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a> [  0.    3.1   5.3   6.1   5.3   3.1   0. ]
 <a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a> [  0.    0.    0.    0.    0.    0.    0. ]]
 </code></pre></div>
-<p><img alt="A temperatura cai de 100 °C na borda quente até 0 °C na borda oposta, mais depressa perto da borda quente" src="../../assets/figuras/cap09_placa_1.png" /></p>
+<p><img alt="A temperatura cai de 100 °C na borda quente até 0 °C na borda oposta, mais depressa perto da borda quente" src="../../assets/figuras/cap08_placa_1.png" /></p>
 <p>O ponto central ficou com <strong>exatamente 25 °C</strong>: a média das quatro bordas (100, 0,
 0 e 0). Isso não é coincidência, e é um bom jeito de conferir o programa.</p>
 <h2 id="mesmo-metodo-outra-area">Mesmo método, outra área<a class="headerlink" href="#mesmo-metodo-outra-area" title="Permanent link">&para;</a></h2>
@@ -3510,7 +3510,7 @@ possível: o PageRank é calculado por iteração.</p>
   tolerância.</li>
 </ul>
 <h2 id="para-praticar">Para praticar<a class="headerlink" href="#para-praticar" title="Permanent link">&para;</a></h2>
-<p>A <a href="../../listas/lista09/">Lista 09</a> começa com duas iterações à mão (✏️) e segue
+<p>A <a href="../../listas/lista08/">Lista 08</a> começa com duas iterações à mão (✏️) e segue
 com a verificação da dominância, o Gauss-Seidel genérico, uma rede de sensores e o
 tráfego num cruzamento.</p>
 

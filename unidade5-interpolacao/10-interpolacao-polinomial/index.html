@@ -1095,14 +1095,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade4-sistemas-lineares/07-do-problema-ao-sistema/" class="md-nav__link">
+      <a href="../../unidade4-sistemas-lineares/07-eliminacao-gauss/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    7. Do problema ao sistema
+    7. Eliminação de Gauss
   
 
     
@@ -1123,14 +1123,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade4-sistemas-lineares/08-eliminacao-gauss/" class="md-nav__link">
+      <a href="../../unidade4-sistemas-lineares/08-jacobi-gauss-seidel/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    8. Eliminação de Gauss
+    8. Jacobi e Gauss-Seidel
   
 
     
@@ -1151,14 +1151,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../unidade4-sistemas-lineares/09-jacobi-gauss-seidel/" class="md-nav__link">
+      <a href="../../unidade4-sistemas-lineares/09-do-problema-ao-sistema/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    9. Jacobi e Gauss-Seidel
+    9. Do problema ao sistema
   
 
     
@@ -2439,7 +2439,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 07 · Do problema ao sistema
+    Lista 07 · Eliminação de Gauss
   
 
     
@@ -2467,7 +2467,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 08 · Eliminação de Gauss
+    Lista 08 · Jacobi e Gauss-Seidel
   
 
     
@@ -2495,7 +2495,7 @@
   <span class="md-ellipsis">
     
   
-    Lista 09 · Jacobi e Gauss-Seidel
+    Lista 09 · Do problema ao sistema
   
 
     
@@ -3211,11 +3211,11 @@ tem grau 4:</p>
 <div class="arithmatex">\[ p(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + a_4 x^4. \]</div>
 <p>Cada ponto da tabela dá uma equação (<span class="arithmatex">\(p(x_i) = y_i\)</span>) nos cinco coeficientes. São 5
 equações lineares e 5 incógnitas: um sistema do
-<a href="../../unidade4-sistemas-lineares/08-eliminacao-gauss/">capítulo 8</a>. A matriz dele,
+<a href="../../unidade4-sistemas-lineares/07-eliminacao-gauss/">capítulo 7</a>. A matriz dele,
 com <span class="arithmatex">\(x_i^j\)</span> na linha <span class="arithmatex">\(i\)</span> e coluna <span class="arithmatex">\(j\)</span>, se chama <strong>matriz de Vandermonde</strong>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Um polinomio que passa por TODOS os pontos da tabela. Com 5 pontos, um</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># polinomio de grau 4: p(x) = a0 + a1 x + a2 x**2 + a3 x**3 + a4 x**4.</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Cada ponto da uma equacao nos coeficientes: um sistema linear (cap. 8).</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Cada ponto da uma equacao nos coeficientes: um sistema linear (cap. 7).</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">50.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">,</span> <span class="mf">400.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">])</span>
@@ -3248,7 +3248,7 @@ com <span class="arithmatex">\(x_i^j\)</span> na linha <span class="arithmatex">
 <p>O polinômio passa exatamente pelos cinco pontos da tabela e dá 11,232 dB em
 300 MHz, um pouco acima da reta (11,185). Repare nos coeficientes: vão de <span class="arithmatex">\(2\)</span> a
 <span class="arithmatex">\(10^{-10}\)</span>. Com mais pontos, a matriz de Vandermonde fica <strong>mal condicionada</strong>
-(capítulo 8), e os coeficientes perdem precisão. É um dos motivos para os dois
+(capítulo 7), e os coeficientes perdem precisão. É um dos motivos para os dois
 métodos seguintes.</p>
 <h2 id="no-quadro-o-polinomio-de-lagrange">No quadro: o polinômio de Lagrange<a class="headerlink" href="#no-quadro-o-polinomio-de-lagrange" title="Permanent link">&para;</a></h2>
 <div class="admonition abstract">
