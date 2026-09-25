@@ -125,6 +125,10 @@
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
+         <loc>https://lacouth.github.io/metodos_telecom-site/listas/lista17/</loc>
+         <lastmod>2026-09-25</lastmod>
+    </url>
+    <url>
          <loc>https://lacouth.github.io/metodos_telecom-site/projeto/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
@@ -189,11 +193,15 @@
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/07-eliminacao-gauss/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/07-do-problema-ao-sistema/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/08-jacobi-gauss-seidel/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/08-eliminacao-gauss/</loc>
+         <lastmod>2026-09-25</lastmod>
+    </url>
+    <url>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade4-sistemas-lineares/09-jacobi-gauss-seidel/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
@@ -201,11 +209,11 @@
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade5-interpolacao/09-interpolacao-polinomial/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade5-interpolacao/10-interpolacao-polinomial/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade5-interpolacao/10-runge-splines/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade5-interpolacao/11-runge-splines/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
@@ -213,11 +221,11 @@
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade6-integrais/11-trapezio-simpson/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade6-integrais/12-trapezio-simpson/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade6-integrais/12-integrando-dados/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade6-integrais/13-integrando-dados/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
@@ -225,11 +233,11 @@
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade7-regressao/13-regressao-linear/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade7-regressao/14-regressao-linear/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade7-regressao/14-ajuste-nao-linear/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade7-regressao/15-ajuste-nao-linear/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
@@ -237,11 +245,11 @@
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade8-series-temporais/15-series-temporais/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade8-series-temporais/16-series-temporais/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
     <url>
-         <loc>https://lacouth.github.io/metodos_telecom-site/unidade8-series-temporais/16-fft/</loc>
+         <loc>https://lacouth.github.io/metodos_telecom-site/unidade8-series-temporais/17-fft/</loc>
          <lastmod>2026-09-25</lastmod>
     </url>
 </urlset>
